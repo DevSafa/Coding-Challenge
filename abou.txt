@@ -1,0 +1,5 @@
+bash init.sh 
+
+composer install 
+
+use laravel schema builder to create databases

@@ -1,8 +1,9 @@
-environment/homestead/vendor
+environment/homestead/.vagrant
 environment/homestead/phpunit.xml
-# environment/homestead/Homestead.json
-# environment/homestead/after.sh
-# environment/homestead/aliases
+environment/homestead/Homestead.json
+environment/homestead/after.sh
+environment/homestead/aliases
+environment/homestead/.vagrant.d
 environment/homestead/mysqldump.sql.gz
 environment/homestead/mysql_backup
 environment/homestead/postgres_backup
