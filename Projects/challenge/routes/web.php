@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Category;
+use App\Http\Controllers\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,3 +25,5 @@ Route::get('/sub_categories/{id}',[Category::class , 'children']);
 Route::get('/category/parent/{id}',[Category::class , 'parent']);
 Route::get('/category/products/{id}',[Category::class , 'products']);
 
+Route::get('/products',[Product::class , 'products']);
+Route::post('/create',[Product::class , 'create']);
