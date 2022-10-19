@@ -23,13 +23,13 @@ class CreateCategoryProductTable extends Migration
 
             $table->foreign('product_id')
                     ->references('id')
-                    ->on('product')
+                    ->on('products')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
 
             $table->foreign('category_id')
                     ->references('id')
-                    ->on('category')
+                    ->on('categories')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
             $table->timestamps();

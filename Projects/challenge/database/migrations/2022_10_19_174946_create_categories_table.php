@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 
-class CreateCategoryTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('category', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             /** The id method is an alias of the bigIncrements method.  */
             $table->id();
             /** the name of category should be unique */
@@ -25,7 +25,7 @@ class CreateCategoryTable extends Migration
          });
          
          /** add foreign key to the table after it's creation */
-         Schema::table('category', function (Blueprint $table)
+         Schema::table('categories', function (Blueprint $table)
          {
             /** Laravel also provides support for creating foreign key constraints, which are used to force referential integrity at the database level */
 
@@ -35,7 +35,7 @@ class CreateCategoryTable extends Migration
              $table->unsignedBigInteger('parent_id')->nullable();
              $table->foreign('parent_id')
                         ->references('id')
-                        ->on('category')
+                        ->on('categories')
                         /** ON DELETE CASCADE means that if the parent record is deleted, any child records are also deleted  */
                         ->onDelete('cascade')
                         /** ON UPDATE CASCADE means that if the parent primary key is changed, the child value will also change to reflect that  */
@@ -50,6 +50,6 @@ class CreateCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category');
+        Schema::dropIfExists('categories');
     }
 }

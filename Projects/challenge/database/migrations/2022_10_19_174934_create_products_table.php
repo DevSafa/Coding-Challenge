@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductTable extends Migration
+class CreateProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateProductTable extends Migration
      */
     public function up()
     {
-        Schema::create('product', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             /** The bigIncrements method creates an auto-incrementing  UNSIGNED BIGINT (primary key) equivalent column  
                 *$table->bigIncrements('id'); // or id()
                 *The id method is an alias of the bigIncrements method. 
@@ -48,6 +48,6 @@ class CreateProductTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product');
+        Schema::dropIfExists('products');
     }
 }
