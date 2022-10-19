@@ -9,7 +9,7 @@ class ProductRepository implements ProductRepositoryInterface
     /** get all Products in database */
     public function products()
     {
-
+        
     }
 
     /** get Products of a specific Category(can be parrent or child) */
