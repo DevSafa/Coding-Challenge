@@ -23,6 +23,20 @@ class DatabaseSeeder extends Seeder
         $categories = Category::factory()
                         ->count(3)
                         ->hasAttached($products)
+                        /* every  category has a parent , belongsTo relationship */
+                        ->for(Category::factory(),"parent")
+                        /* every category has vhildren hasMany relationship */
+                        ->has(Category::factory()->count(3),"children")
                         ->create();
+
+        // Product::factory()->count(4)->create();
+        Category::factory()
+                        ->count(2)
+                        ->hasAttached($products)
+                        /* every category has vhildren hasMany relationship */
+                        ->has(Category::factory()->count(3),"children")
+                        ->create();
+
+
     }
 }
