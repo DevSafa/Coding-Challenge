@@ -13,8 +13,7 @@ class CreateCategoryProductTable extends Migration
      */
     public function up()
     {
-        /** define Many to many relationship in database layer  by specifying 2 foreign keys from two tables 
-         * Product and Category == > pivot table  */
+     
         Schema::create('category_product', function (Blueprint $table) {
 
             $table->id();

@@ -8,7 +8,6 @@ use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
-/* create a service container for managing class dependencies */
 class RepositoryService extends ServiceProvider
 {
     /**

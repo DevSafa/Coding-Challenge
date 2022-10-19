@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         /* create 5 products */
         $products = Product::factory()->count(5)->create();
 
-        /** create three categories and attach them to products randomly */
+    
         $categories = Category::factory()
                         ->count(3)
                         ->hasAttached($products)
@@ -29,7 +29,6 @@ class DatabaseSeeder extends Seeder
                         ->has(Category::factory()->count(3),"children")
                         ->create();
 
-        // Product::factory()->count(4)->create();
         Category::factory()
                         ->count(2)
                         ->hasAttached($products)

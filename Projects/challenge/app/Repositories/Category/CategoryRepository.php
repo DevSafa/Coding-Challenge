@@ -4,9 +4,7 @@
 use App\Models\Category;
 
     class CategoryRepository implements CategoryRepositoryInterface {
-        /** querying to database using Eloquent ORM  Models relations 
-         * and predefined methods
-         */
+  
         
         /** get All Categories */
         public function categories()
