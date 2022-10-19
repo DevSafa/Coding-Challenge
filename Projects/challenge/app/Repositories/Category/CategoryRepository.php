@@ -21,9 +21,9 @@ use App\Models\Category;
         }
 
         /** get all childs categories of a specific parent  */
-        public function childs($id)
+        public function children($id)
         {
-            return Category::find($id)->childs()->get();
+            return Category::find($id)->children()->get();
         }
 
         /** get parent of a specific category  */

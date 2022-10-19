@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Category;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/categories',[Category::class , 'categories']);
+Route::get('/main_categories',[Category::class , 'parents']);
+Route::get('/sub_categories/{id}',[Category::class , 'children']);
+Route::get('/category/parent/{id}',[Category::class , 'parent']);
+Route::get('/category/products/{id}',[Category::class , 'products']);
+

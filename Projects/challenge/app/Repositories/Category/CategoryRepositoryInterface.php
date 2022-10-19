@@ -11,7 +11,7 @@ interface CategoryRepositoryInterface
     public function parents();
 
     /** get all childs categories of a specific parent  */
-    public function childs($id);
+    public function children($id);
 
     /** get parent of a specific category  */
     public function parent($id);
