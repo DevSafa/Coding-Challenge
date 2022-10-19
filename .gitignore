@@ -1,0 +1,13 @@
+environment/homestead/vendor
+environment/homestead/phpunit.xml
+# environment/homestead/Homestead.json
+# environment/homestead/after.sh
+# environment/homestead/aliases
+environment/homestead/mysqldump.sql.gz
+environment/homestead/mysql_backup
+environment/homestead/postgres_backup
+environment/homestead/user-customizations.sh
+environment/homestead/.phpunit.result.cache
+environment/homestead/wsl-init.log
+environment/homestead/.backup/*
+about.txt

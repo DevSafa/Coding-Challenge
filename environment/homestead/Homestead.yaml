@@ -1,0 +1,55 @@
+
+
+---
+ip: "192.168.56.56"
+memory: 2048
+cpus: 2
+#  The provider key in your Homestead.yaml file indicates which Vagrant provider should be used: virtualbox or parallels
+provider: virtualbox
+
+authorize: ~/.ssh/id_rsa.pub
+
+keys:
+    - ~/.ssh/id_rsa
+
+# The folders property of the Homestead.yaml file lists all of the folders you wish to share with your Homestead environment. As files within these folders are changed, they will be kept in sync between your local machine and the Homestead virtual environment.
+
+folders:
+    - map: ~/Coding-challenge/Projects/challenge
+      to: /home/vagrant/Projects/challenge
+# Your Homestead.yaml file's sites property allows you to easily map a "domain" to a folder on your Homestead environment.
+sites:
+    - map: challenge.test
+      to: /home/vagrant/Projects/challenge/public
+      php: "7.3"
+
+databases:
+    - homestead
+
+features:
+    - mysql: true
+    - mariadb: false
+    - postgresql: false
+    - ohmyzsh: false
+    - webdriver: false
+
+# Homestead starts several services by default; however, you may customize which services are enabled or disabled during provisioning
+services:
+    - enabled:
+          - "mysql"
+#    - disabled:
+#        - "postgresql@11-main"
+
+ports:
+   - send: 33060 # MySQL/MariaDB
+     to: 3306
+#    - send: 4040
+#      to: 4040
+#    - send: 54320 # PostgreSQL
+#      to: 5432
+#    - send: 8025 # Mailhog
+#      to: 8025
+#    - send: 9600
+#      to: 9600
+#    - send: 27017
+#      to: 27017
