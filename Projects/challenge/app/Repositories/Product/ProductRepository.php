@@ -2,6 +2,7 @@
 namespace App\Repositories\Product;
 
 use App\Models\Product;
+use App\Models\Category;
 
 use App\Repositories\Category\CategoryRepositoryInterface;
 
@@ -17,6 +18,23 @@ class ProductRepository implements ProductRepositoryInterface
     {
         return Product::get();
     }
+    public function storeCli($name, $description, $price , $category)
+    {
+        $product = Product::create([
+            "name" => $name,
+            "description" => $description,
+            "price" => (float)$price,
+            "image" => "test",
+        ]);
+        $categories = [];
+        $parent = Category::where("name", $category)->get();
+        while(!empty($parent->toArray()))
+        {
+            array_push($categories , $parent[0]->id);
+            $parent = $this->categoryRepository->parent($parent[0]->id);
+        }
+        $product->categories()->sync($categories);
+    }
 
     public function store($request)
     {
@@ -29,7 +47,6 @@ class ProductRepository implements ProductRepositoryInterface
         ]);
         $categories = [];
         array_push($categories , $request->category);
-      
         $parent = $this->categoryRepository->parent($request->category);
         while(!empty($parent->toArray()))
         {

@@ -7,6 +7,7 @@ interface ProductRepositoryInterface
     /** get all Products in database */
     public function products();
     public function store($request);
+    public function storeCli($name, $description, $price , $category);
 }
 
 ?>
