@@ -5314,6 +5314,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      categories: [],
+      subCategory: []
+    };
+  },
+  created: function created() {
+    this.fetchCategories();
+  },
+  methods: {
+    fetchCategories: function fetchCategories() {
+      var _this = this;
+      axios.get('/categories').then(function (res) {
+        _this.categories = res.data;
+      });
+    }
+  },
   mounted: function mounted() {
     console.log('Component mounted.');
   }
@@ -5336,24 +5353,76 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _vm._m(0);
+  return _c("div", {
+    staticClass: "mx-auto w-100 mt-5"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_vm._m(0), _vm._v(" "), _vm._l(this.categories, function (category) {
+    return _c("div", {
+      staticClass: "p-2 col-4"
+    }, [_c("div", {
+      staticClass: "w-100 align-items-center py-1",
+      on: {
+        click: function click($event) {
+          return _vm.clickCategory(category.id);
+        }
+      }
+    }, [_c("button", {
+      staticClass: "btn btn-success",
+      attrs: {
+        type: "button"
+      }
+    }, [_vm._v(_vm._s(category.name))])])]);
+  }), _vm._v(" "), _c("div", {
+    staticClass: "row mt-5"
+  }, _vm._l(this.subCategory, function (category) {
+    return _c("div", {
+      staticClass: "p-2 col-4",
+      on: {
+        click: function click($event) {
+          return _vm.clickSubCategory(category.id);
+        }
+      }
+    }, [_c("button", {
+      staticClass: "btn btn-info",
+      attrs: {
+        type: "button"
+      }
+    }, [_vm._v(_vm._s(category.name))])]);
+  }), 0), _vm._v(" "), _vm._l(this.products, function (product) {
+    return _c("div", {
+      staticClass: "col-6 p-2"
+    }, [_c("div", {
+      staticClass: "card",
+      staticStyle: {
+        width: "18rem"
+      }
+    }, [_c("img", {
+      staticClass: "card-img-top",
+      attrs: {
+        src: ""
+      }
+    }), _vm._v(" "), _c("div", {
+      staticClass: "card-body"
+    }, [_c("h5", {
+      staticClass: "card-title"
+    }, [_c("strong", [_vm._v("Name : ")]), _vm._v(" : " + _vm._s(product.name))]), _vm._v(" "), _c("h5", {
+      staticClass: "card-title"
+    }, [_c("strong", [_vm._v("Price : ")]), _vm._v(_vm._s(product.price))]), _vm._v(" "), _c("p", {
+      staticClass: "card-text"
+    }, [_vm._v("description" + _vm._s(product.description))])])])]);
+  })], 2)]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "container"
+    staticClass: "col-12 p-2"
   }, [_c("div", {
-    staticClass: "row justify-content-center"
-  }, [_c("div", {
-    staticClass: "col-md-8"
-  }, [_c("div", {
-    staticClass: "card"
-  }, [_c("div", {
-    staticClass: "card-header"
-  }, [_vm._v("Example Component")]), _vm._v(" "), _c("div", {
-    staticClass: "card-body"
-  }, [_vm._v("\n                    I'm an example component.\n                ")])])])])]);
+    staticClass: "w-100 align-items-center py-1"
+  }, [_c("h5", {
+    staticClass: "text-center"
+  }, [_vm._v(" Categories")])])]);
 }];
 render._withStripped = true;
 
