@@ -38,7 +38,9 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function store($request)
     {
+       
         $name =  uniqid() . '-' .$request->name . '.' . $request->file('image')->extension();
+        
         $product = Product::create([
             "name" => $request->name,
             "description" => $request->description,

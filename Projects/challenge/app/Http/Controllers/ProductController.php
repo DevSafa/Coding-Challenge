@@ -29,7 +29,7 @@ class ProductController extends Controller
             'description' => 'required|string|max:1000',
             'price' => 'required|numeric',
             'category' => 'required|exists:categories,id',
-            'image' => 'image|unique:products'
+            'image' => 'required|image|unique:products'
         ]);
       
         if ($validator->fails())

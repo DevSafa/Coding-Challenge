@@ -19,7 +19,7 @@
             </div> 
             <div class="col-6 p-2 " v-for="product in this.products" > 
                     <div class="card" style="width: 18rem;">
-                        <img src ="../../../storage/app/images/6350dbd2e4ec7-safa.png" class="card-img-top" >
+
                         <div class="card-body">
                         <h5 class="card-title"><strong>Name : </strong> : {{ product.name}}</h5>
                         <h5 class="card-title"><strong>Price : </strong>{{ product.price}}</h5>
@@ -73,9 +73,23 @@
                 })
                 .then(res => {
                     this.subCategory = res.data;
+                    this.subCategory = res.data;
+                    axios.get(`/category/products/${id}`)
+                        .then(res => {
+                            this.products = res.data
+                        })
                 })
                 
             },
+
+            clickSubCategory(id)
+            {   
+                axios.get(`/category/products/${id}`)
+                    .then(res => {
+                        this.products = res.data
+                    })
+            },
+
             mounted() {
                 console.log('Component mounted.')
             }
