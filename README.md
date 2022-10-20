@@ -26,6 +26,9 @@
   ## browser 
   ```bash
   #to show categories - subcategories and products 
-  127.0.0.1:8000
+  GET 127.0.0.1:8000
+  
+  #to create a product : use Postman to submit data as form-data
+  POST 127.0.0.1:8000/create
   ```
 ## Second one is by using Docker 
