@@ -2,6 +2,7 @@
 namespace App\Repositories\Product;
 
 use App\Models\Product;
+use App\Models\Category;
 
 class ProductRepository implements ProductRepositoryInterface 
 {
@@ -19,9 +20,11 @@ class ProductRepository implements ProductRepositoryInterface
             "name" => $request->name,
             "description" => $request->description,
             "price" => $request->price,
-            "image" => $name
+            "image" => $name,
         ]);
-
+        $product->categories()->sync($request->category);
+        /* to do : must add also the product to teh parent category if exist */
+      
         $product->upload($name,$request->file('image'));
 
     }

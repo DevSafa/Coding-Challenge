@@ -22,18 +22,18 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
 
             'name' => 'required|string|unique:products',
             'description' => 'required|string|max:1000',
             'price' => 'required|numeric',
             'category' => 'required|exists:categories,id',
-            //image :The file under validation must be an image (jpeg, png, bmp, or gif)
             'image' => 'required|image|unique:products'
         ]);
-       
+      
         if ($validator->fails())
-            return false;
+            return response($validator->errors(), 403); // forbidden
         else
             return $this->productRepository->store($request);
     }

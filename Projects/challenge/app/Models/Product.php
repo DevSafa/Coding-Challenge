@@ -10,7 +10,6 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable = ['name','description','price','image'];
-    
     public function upload($filename,$image)
     {        
         $image->storeAs('images',$filename); 
