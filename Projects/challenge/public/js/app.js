@@ -5328,7 +5328,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     fetchCategories: function fetchCategories() {
       var _this = this;
-      axios.get('/categories').then(function (res) {
+      axios.get('/main_categories').then(function (res) {
         _this.categories = res.data;
       });
     },
@@ -5340,11 +5340,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     clickCategory: function clickCategory(id) {
       var _this3 = this;
-      axios.get('/sub_categories', {
-        params: {
-          id: id
-        }
-      }).then(function (res) {
+      axios.get("/sub_categories/".concat(id)).then(function (res) {
         _this3.subCategory = res.data;
         _this3.subCategory = res.data;
         axios.get("/category/products/".concat(id)).then(function (res) {

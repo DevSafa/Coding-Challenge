@@ -50,7 +50,7 @@
         methods : 
         {
             fetchCategories(){
-                axios.get('/categories')
+                axios.get('/main_categories')
                 .then(res =>{
                     this.categories = res.data;
                 })
@@ -66,11 +66,7 @@
 
             clickCategory(id)
             {
-                axios.get('/sub_categories',{
-                    params : {
-                        id : id,
-                    }
-                })
+                axios.get(`/sub_categories/${id}`)
                 .then(res => {
                     this.subCategory = res.data;
                     this.subCategory = res.data;

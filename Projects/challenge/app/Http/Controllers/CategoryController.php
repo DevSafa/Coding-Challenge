@@ -23,9 +23,9 @@ class CategoryController extends Controller
     }
 
 
-    public function children(Request $request)
+    public function children($id)
     {
-        return $this->categoryRepository->children($request->input('id'));
+        return $this->categoryRepository->children($id);
     }
 
 

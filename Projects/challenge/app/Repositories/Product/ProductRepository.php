@@ -38,15 +38,14 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function store($request)
     {
-       
         $name =  uniqid() . '-' .$request->name . '.' . $request->file('image')->extension();
-        
         $product = Product::create([
             "name" => $request->name,
             "description" => $request->description,
             "price" => (float)$request->price,
             "image" => $name,
         ]);
+        
         $categories = [];
         array_push($categories , $request->category);
         $parent = $this->categoryRepository->parent($request->category);
