@@ -14,14 +14,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function create($product)
     {
-        return $product->get_image();
-    //   return [
-    //         $product->get_name(),
-    //         $product->get_description(),
-    //         $product->get_price(),
-    //         $product->get_category(),
-    //         $product->get_image()
-    //     ];
+        return "hello";
     }
 
  

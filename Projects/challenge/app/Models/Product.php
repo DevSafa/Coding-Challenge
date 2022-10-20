@@ -5,6 +5,7 @@ namespace App\Models;
 use Hamcrest\Description;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -16,6 +17,7 @@ class Product extends Model
 
     private $category;
     private $image;
+    private $image_path;
 
     public function __construct($name , $description , $price, $category, $image)
     {
@@ -24,8 +26,13 @@ class Product extends Model
         $this->price = $price;
         $this->category = $category;
         $this->image = $image;
+        $this->upload();
+    }
 
-        
+    public function upload()
+    {
+        $image_path =  uniqid() . '-' .$this->get_name() . '.' . $this->get_image()->extension();
+        $this->image->storeAs('images',$image_path); 
     }
 
     public function get_name()
