@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Repositories\Category\CategoryRepositoryInterface;
-class Category extends Controller
+class CategoryController extends Controller
 {
 
     public function __construct(CategoryRepositoryInterface $categoryRepositoryInterface)

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateProductRequest;
+use App\Models\Product;
+use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class Product extends Controller
+class ProductController extends Controller
 {
     public function __construct(ProductRepositoryInterface $productRepositoryInterface)
     {
@@ -33,10 +35,16 @@ class Product extends Controller
         ]);
 
         if ($validator->fails()) {
-            return "error";
- 
+            return false;
         }
-        return "good";
+        else
+        {
+    
+           $product =  new Product($request->get('name'), $request->get('description'), $request->get('price'), $request->get('category'),$request->file('image'));
+       
+           return $this->productRepository->create($product);
+   
+        }
     }
 
 

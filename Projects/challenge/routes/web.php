@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Category;
-use App\Http\Controllers\Product;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,11 +19,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/categories',[Category::class , 'categories']);
-Route::get('/main_categories',[Category::class , 'parents']);
-Route::get('/sub_categories/{id}',[Category::class , 'children']);
-Route::get('/category/parent/{id}',[Category::class , 'parent']);
-Route::get('/category/products/{id}',[Category::class , 'products']);
+Route::get('/categories',[CategoryController::class , 'categories']);
+Route::get('/main_categories',[CategoryController::class , 'parents']);
+Route::get('/sub_categories/{id}',[CategoryController::class , 'children']);
+Route::get('/category/parent/{id}',[CategoryController::class , 'parent']);
+Route::get('/category/products/{id}',[CategoryController::class , 'products']);
 
-Route::get('/products',[Product::class , 'products']);
-Route::post('/create',[Product::class , 'create']);
+Route::get('/products',[ProductController::class , 'products']);
+Route::post('/create',[ProductController::class , 'create']);
