@@ -5317,11 +5317,13 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       categories: [],
-      subCategory: []
+      subCategory: [],
+      products: []
     };
   },
   created: function created() {
     this.fetchCategories();
+    this.fetchProducts();
   },
   methods: {
     fetchCategories: function fetchCategories() {
@@ -5329,10 +5331,26 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/categories').then(function (res) {
         _this.categories = res.data;
       });
+    },
+    fetchProducts: function fetchProducts() {
+      var _this2 = this;
+      axios.get('/products').then(function (res) {
+        _this2.products = res.data;
+      });
+    },
+    clickCategory: function clickCategory(id) {
+      var _this3 = this;
+      axios.get('/sub_categories', {
+        params: {
+          id: id
+        }
+      }).then(function (res) {
+        _this3.subCategory = res.data;
+      });
+    },
+    mounted: function mounted() {
+      console.log('Component mounted.');
     }
-  },
-  mounted: function mounted() {
-    console.log('Component mounted.');
   }
 });
 
@@ -5400,7 +5418,7 @@ var render = function render() {
     }, [_c("img", {
       staticClass: "card-img-top",
       attrs: {
-        src: ""
+        src: __webpack_require__(/*! ../../../storage/app/images/6350dbd2e4ec7-safa.png */ "./storage/app/images/6350dbd2e4ec7-safa.png")
       }
     }), _vm._v(" "), _c("div", {
       staticClass: "card-body"
@@ -10744,6 +10762,16 @@ defineJQueryPlugin(Toast);
 
 //# sourceMappingURL=bootstrap.esm.js.map
 
+
+/***/ }),
+
+/***/ "./storage/app/images/6350dbd2e4ec7-safa.png":
+/*!***************************************************!*\
+  !*** ./storage/app/images/6350dbd2e4ec7-safa.png ***!
+  \***************************************************/
+/***/ ((module) => {
+
+module.exports = "/images/6350dbd2e4ec7-safa.png?c84d2c9f4af69f4612c0d46f7986a2b1";
 
 /***/ }),
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
 
@@ -22,9 +23,9 @@ class CategoryController extends Controller
     }
 
 
-    public function children($id)
+    public function children(Request $request)
     {
-        return $this->categoryRepository->children($id);
+        return $this->categoryRepository->children($request->input('id'));
     }
 
 
