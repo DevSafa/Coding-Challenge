@@ -12,11 +12,18 @@ class ProductRepository implements ProductRepositoryInterface
         return Product::get();
     }
 
-    public function create($product)
+    public function store($request)
     {
-        return "hello";
-    }
+        $name =  uniqid() . '-' .$request->name . '.' . $request->file('image')->extension();
+        $product = Product::create([
+            "name" => $request->name,
+            "description" => $request->description,
+            "price" => $request->price,
+            "image" => $name
+        ]);
 
- 
+        $product->upload($name,$request->file('image'));
+
+    }
 }
 ?>
