@@ -42,7 +42,7 @@ class ProductRepository implements ProductRepositoryInterface
         $product = Product::create([
             "name" => $request->name,
             "description" => $request->description,
-            "price" => $request->price,
+            "price" => (float)$request->price,
             "image" => $name,
         ]);
         $categories = [];
