@@ -2,11 +2,16 @@
 namespace App\Repositories\Product;
 
 use App\Models\Product;
-use App\Models\Category;
+
+use App\Repositories\Category\CategoryRepositoryInterface;
+
 
 class ProductRepository implements ProductRepositoryInterface 
 {
-
+    public function __construct(CategoryRepositoryInterface $categoryRepositoryInterface)
+    {
+        $this->categoryRepository = $categoryRepositoryInterface;
+    }
     /** get all Products in database */
     public function products()
     {
@@ -22,9 +27,18 @@ class ProductRepository implements ProductRepositoryInterface
             "price" => $request->price,
             "image" => $name,
         ]);
-        $product->categories()->sync($request->category);
-        /* to do : must add also the product to teh parent category if exist */
+        $categories = [];
+        array_push($categories , $request->category);
       
+        $parent = $this->categoryRepository->parent($request->category);
+        while(!empty($parent->toArray()))
+        {
+            array_push($categories , $parent[0]->id);
+            $parent = $this->categoryRepository->parent($parent[0]->id);
+        }
+       
+     
+        $product->categories()->sync($categories);
         $product->upload($name,$request->file('image'));
 
     }
