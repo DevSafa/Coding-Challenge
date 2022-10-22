@@ -5,11 +5,27 @@ use App\Models\Category;
 
     class CategoryRepository implements CategoryRepositoryInterface {
   
-        
+        private function binChildren($categories)
+        {
+            foreach ($categories as $category)
+            {
+                // maybe need to use eager loader  instead of thaaatt   ?????????? 
+               $category->children = $category->children()->get();
+                if($category->children->isNotEmpty()) {
+                    self::binChildren($category->children);
+                }
+            }
+        }
+
         /** get All Categories */
         public function categories()
         {
-            return Category::get();
+        
+            $categories = Category::get();
+            $parentCategories = $categories->whereNull('parent_id');
+            self::binChildren($parentCategories);
+            return $parentCategories;
+
         }
 
         /** get all parent Categories */

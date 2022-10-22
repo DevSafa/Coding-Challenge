@@ -5,7 +5,7 @@ namespace App\Repositories\Category;
 interface CategoryRepositoryInterface
 {
     /** get All Categories */
-    public function Categories();
+    public function categories();
 
     /** get all parent Categories */
     public function parents();
