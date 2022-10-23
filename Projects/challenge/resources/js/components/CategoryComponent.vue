@@ -16,6 +16,7 @@
         <div class="Products">
             <h1>Products</h1>
             <productComponent
+                :products=this.products
             />
         </div>
     </div>
@@ -26,6 +27,7 @@
 import axios from 'axios';
 import categoryItem from './SubCategoryComponent.vue'
 import productComponent from './ProductComponent.vue'
+
     export default {
         name : "recursive-category",
         created() {
@@ -37,15 +39,28 @@ import productComponent from './ProductComponent.vue'
                 .then(res => {
                     this.categoryTree = res.data;
                 })
+
+                axios.get("/products")
+                    .then(res => {
+                        this.products = res.data;
+                    })
+                
             },
-            changeFromChild($id)
+
+            changeFromChild(id)
             {
-                console.log("hello from Category",$id);
+               console.log("hello from Category",id);
+                axios.get(`/category/products/${id}`)
+                    .then(res => {
+                        this.products = res.data;
+                    })
             }
         },
         data () {
             return {
-                categoryTree : []
+                categoryTree : [],
+                products : [],
+                which : ""
             }
         },
         components : {
