@@ -38,16 +38,16 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function store($request)
     {
-        $name =  uniqid() . '-' .$request->name . '.' . $request->file('image')->extension();
+        $name =  uniqid() . '-' .$request->name . '.' . $request->infos->file('image')->extension();
         $product = Product::create([
-            "name" => $request->name,
-            "description" => $request->description,
-            "price" => (float)$request->price,
+            "name" => $request->infos->name,
+            "description" => $request->infos->description,
+            "price" => (float)$request->infos->price,
             "image" => $name,
         ]);
         
         $categories = [];
-        array_push($categories , $request->category);
+        array_push($categories , $request->infos->category);
         $parent = $this->categoryRepository->parent($request->category);
         while(!empty($parent->toArray()))
         {
@@ -57,7 +57,7 @@ class ProductRepository implements ProductRepositoryInterface
        
      
         $product->categories()->sync($categories);
-        $product->upload($name,$request->file('image'));
+        $product->upload($name,$request->infos->file('image'));
 
     }
 }

@@ -9,7 +9,7 @@
         </div>
         <div class="item-container" v-show="showChildren">
             <category-item v-for="(item, index) in data" :key="index" :name="item.name" :space=" space + 1 "
-                :data="item.children" :id="item.id" v-on:callChange="changeFromChild" />
+                :data="item.children" :id="item.id"  v-on:callChange="changeFromChild" />
         </div>
     </div>
 

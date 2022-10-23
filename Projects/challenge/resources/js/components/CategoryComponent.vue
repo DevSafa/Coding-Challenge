@@ -8,7 +8,10 @@
         <div class="Products">
 
             <h1>Products</h1>
-            <productComponent :products=this.products />
+            <productComponent :products=this.products
+                                :creation="this.create"
+                                :id="this.id"
+                                 />
 
 
         </div>
@@ -26,6 +29,7 @@ export default {
     name: "recursive-category",
     created() {
         this.fetchData();
+        this.id = 0;
     },
     methods: {
         fetchData() {
@@ -38,6 +42,7 @@ export default {
                 .then(res => {
                     this.products = res.data;
                 })
+            this.create = false;
 
         },
 
@@ -45,6 +50,8 @@ export default {
             console.log("hello from Category", id);
             axios.get(`/category/products/${id}`)
                 .then(res => {
+                   this.create = true;
+                    this.id  = id;
                     this.products = res.data;
                 })
 
@@ -57,7 +64,9 @@ export default {
         return {
             categoryTree: [],
             products: [],
-            which: "",
+            create : false,
+    
+         
 
         }
     },

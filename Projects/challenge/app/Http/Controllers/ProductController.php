@@ -23,19 +23,25 @@ class ProductController extends Controller
     public function create(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
+        // $validator = Validator::make($request->all(), [
 
-            'name' => 'required|string|unique:products',
-            'description' => 'required|string|max:1000',
-            'price' => 'required|numeric',
-            'category' => 'required|exists:categories,id',
-            'image' => 'required|image|unique:products'
-        ]);
+        //     'name' => 'required|string|unique:products',
+        //     'description' => 'required|string|max:1000',
+        //     'price' => 'required|numeric',
+        //     'category' => 'required|exists:categories,id',
+        //     'image' => 'required|image|unique:products'
+        // ]);
       
-        if ($validator->fails())
-            return response($validator->errors(), 403); // forbidden
-        else
-            return $this->productRepository->store($request);
+        // if ($validator->fails())
+        // {
+        //     return "not created";
+        //     return response($validator->errors(), 403); // forbidden
+        // }
+        // else
+        // {
+            // return $request->infos;
+        //    return $this->productRepository->store($request);
+        // }
     }
 
 

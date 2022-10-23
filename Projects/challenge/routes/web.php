@@ -28,4 +28,4 @@ Route::get('/categories',[CategoryController::class , 'categories']);
 Route::get('/category/products/{id}',[CategoryController::class , 'products']);
 
 Route::get('/products',[ProductController::class , 'products']);
-// Route::post('/create',[ProductController::class , 'create']);
+Route::post('/create',[ProductController::class , 'create']);

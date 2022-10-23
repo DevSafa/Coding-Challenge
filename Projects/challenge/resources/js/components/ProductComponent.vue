@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <div>
-      <Modale v-if="revele" class="creation" :revele="revele" :toggleModale="toggleModale" />
+      <Modale v-if="revele" class="creation" :revele="revele" :toggleModale="toggleModale" :id="id" />
     </div>
-    <div @click="toggleModale" class="btn btn-success">Create new Product</div>
+    <div v-show="creation" @click="toggleModale" class="btn btn-success">Create new Product</div>
 
 
     <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative">
@@ -34,6 +34,7 @@
 
 
 <script>
+
 import Modale from './ModaleComponent.vue';
 
 export default {
@@ -46,7 +47,14 @@ export default {
   props: {
     products: {
       type: Array
+    },
+    creation : {
+      type : Boolean
+    },
+    id : {
+      type :Number
     }
+  
 
   },
   methods: {
@@ -59,7 +67,7 @@ export default {
   },
   data() {
     return {
-      revele: false
+      revele: false,
     }
   },
   components: {
