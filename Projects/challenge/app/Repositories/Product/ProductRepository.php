@@ -20,13 +20,13 @@ class ProductRepository
 	}
 
 
-	public function uploadProductImage($image)
+	private static  function uploadProductImage($image)
 	{
 		$image->storeAs('public/images',$image);
 	}
 
 
-	public function createProduct($request)
+	public static  function createProduct($request)
 	{
 		$name =  uniqid() . '-' .$request->name . '.' . $request->file('image')->extension();
 
@@ -39,8 +39,8 @@ class ProductRepository
 			]
 		);
 
-		$this->attachCategories($product,$request['category']);
-		$this->uploadProductImage($request->file('image'));
+		self::attachCategories($product,$request['category']);
+		self::uploadProductImage($request->file('image'));
 
 		return $product;
 	}
