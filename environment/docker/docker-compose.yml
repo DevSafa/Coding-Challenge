@@ -15,6 +15,18 @@ services:
         - /goinfre/sbarka/Coding-challenge/Projects/challenge:/var/www
       networks:
         - my_network
+    webserv-nginx:
+      image: nginx:1.17-alpine
+      container_name: webserver-nginx
+      restart: unless-stopped
+      ports:
+        - 8000:80
+      volumes:
+        - /goinfre/sbarka/Coding-challenge/Projects/challenge:/var/www
+        - ./nginx:/etc/nginx/conf.d
+      networks:
+        - my_network
+    
 networks:
-  my_network:
-    driver: bridge
+      my_network:
+        driver: bridge
