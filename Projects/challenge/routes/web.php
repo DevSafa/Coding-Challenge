@@ -19,13 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/categories',[CategoryController::class , 'categories']);
-// Route::get('/main_categories',[CategoryController::class , 'parents']);
-
-
-// Route::get('/sub_categories/{id}',[CategoryController::class , 'children']);
-// Route::get('/category/parent/{id}',[CategoryController::class , 'parent']);
-Route::get('/category/products/{id}',[CategoryController::class , 'products']);
-
-Route::get('/products',[ProductController::class , 'products']);
-Route::post('/create',[ProductController::class , 'create']);
+Route::get('/categories',[CategoryController::class , 'getCategories']);
+Route::get('/category/products/{id}',[CategoryController::class , 'getProductsCategory']);
+Route::get('/products',[ProductController::class , 'getProducts']);
+Route::post('/create',[ProductController::class , 'createProduct']);
