@@ -2,7 +2,7 @@ version: "3.7"
 services:
     mysql-db:
       image: mysql:8.0
-      container_name: mysql
+      container_name: mysql-db
       restart: unless-stopped
       environment:
         MYSQL_DATABASE: ${DB_DATABASE}
@@ -10,16 +10,13 @@ services:
         MYSQL_PASSWORD: ${DB_PASSWORD}
         MYSQL_USER: ${DB_USERNAME}
       ports:
-       - "3306:3306" 
-      networks:
-        - my_network
-
+       - "3306:3306"
 
     laravel-app:
       build:
         args:
-          user: sbarka
-          uid: 1000
+          user: ${USER}
+          uid: ${UID}
         context: ./
         dockerfile: Dockerfile
       image: laravel-app
@@ -27,11 +24,10 @@ services:
       restart: unless-stopped
       working_dir: /var/www/
       volumes:
-        - /goinfre/sbarka/Coding-challenge/Projects/challenge:/var/www
-      networks:
-        - my_network
-
-
+        - ${PATH_PROJECT}:/var/www
+      # networks:
+      #   - my_network
+      
     webserver-nginx:
       image: nginx:1.17-alpine
       container_name: webserver-nginx
@@ -39,11 +35,9 @@ services:
       ports:
         - 8000:80
       volumes:
-        - /goinfre/sbarka/Coding-challenge/Projects/challenge:/var/www
+        - ${PATH_PROJECT}:/var/www
         - ./nginx:/etc/nginx/conf.d
-      networks:
-        - my_network
-    
-networks:
-      my_network:
-        driver: bridge
+
+# networks:
+#       my_network:
+#         driver: bridge
