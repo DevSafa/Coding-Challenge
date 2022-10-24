@@ -10,8 +10,7 @@
       <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
         <div class="col hp" v-for="product in this.products">
           <div class="card h-100 shadow-sm">
-            <img src="https://m.media-amazon.com/images/I/81gK08T6tYL._AC_SL1500_.jpg" class="card-img-top"
-              alt="product.title" />
+            <img v-bind:src="'storage/images/'+ product.image"  class="card-img-top">
             <div class="label-top">
               <div class="text">{{ product.name}}</div>
             </div>
@@ -82,13 +81,12 @@ export default {
 
 <style lang="scss" scoped>
 .container-fluid {
-  max-width: 1400px;
-
+  max-width: 1000px;
 }
 
 .card h5 {
   overflow: hidden;
-  height: 55px;
+  height: 40px;
   font-weight: 300;
   font-size: 1rem;
 }

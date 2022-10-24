@@ -13,8 +13,8 @@
 		<div class="Products">
 			
 			<h1>Products</h1>
-			<div class="custom-control custom-checkbox" v-show="this.create">
-				<input type="checkbox" class="custom-control-input" v-on:change="sort($event)">
+			<div class="custom-control custom-checkbox" v-show="this.products.length != 0">
+				<input type="checkbox" class="custom-control-input" v-on:change="sortByPrice($event)">
 				<label class="custom-control-label" for="customCheck1">sort By Price</label>
 			</div>
 			<div>
@@ -34,7 +34,7 @@ import productComponent from './ProductComponent.vue'
 
 
 	export default {
-	name: "category",
+	name: "categories",
 	data() {
 		return {
 			categoryTree: [],
@@ -62,8 +62,10 @@ import productComponent from './ProductComponent.vue'
 				})
 			this.create = false;
 		},
-		sort($event)
+		sortByPrice($event)
 		{
+			console.log("sortyByPrice");
+
 			if($event.target.checked)
 			{
 				this.temp = this.products;
@@ -74,7 +76,7 @@ import productComponent from './ProductComponent.vue'
 			else
 				this.products = this.temp;
 		},
-		
+
 		changeFromChild(id) 
 		{
 			axios.get(`/category/products/${id}`)
