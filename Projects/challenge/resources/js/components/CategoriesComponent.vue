@@ -11,10 +11,17 @@
 							v-on:callChange="changeFromChild" />
 		</div>
 		<div class="Products">
+			
 			<h1>Products</h1>
-			<productComponent 	:products	= this.products
-								:creation	= "this.create"
-								:id			= "this.id"/>
+			<div class="custom-control custom-checkbox" v-show="this.create">
+				<input type="checkbox" class="custom-control-input" v-on:change="sort($event)">
+				<label class="custom-control-label" for="customCheck1">sort By Price</label>
+			</div>
+			<div>
+				<productComponent 	:products	= this.products
+									:creation	= "this.create"
+									:id			= "this.id"/>
+			</div>
 		</div>
 	</div>
 </template>
@@ -32,6 +39,7 @@ import productComponent from './ProductComponent.vue'
 		return {
 			categoryTree: [],
 			products: [],
+			temp : [],
 			create : false,
 		}
 	},
@@ -39,7 +47,9 @@ import productComponent from './ProductComponent.vue'
 		this.fetchData();
 		this.id = 0;
 	},
+	
 	methods: {
+
 		fetchData() 
 		{
 			axios.get("/categories")
@@ -52,6 +62,19 @@ import productComponent from './ProductComponent.vue'
 				})
 			this.create = false;
 		},
+		sort($event)
+		{
+			if($event.target.checked)
+			{
+				this.temp = this.products;
+				this.products = this.products.slice().sort(function(a, b) {
+        				return a.price - b.price;
+      			});
+			}
+			else
+				this.products = this.temp;
+		},
+		
 		changeFromChild(id) 
 		{
 			axios.get(`/category/products/${id}`)
@@ -62,6 +85,7 @@ import productComponent from './ProductComponent.vue'
 				})
 		},
     },
+
 	components: 
 	{
 		categoryItemComponent,

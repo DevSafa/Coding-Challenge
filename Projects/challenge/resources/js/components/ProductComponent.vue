@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
+  <div v-show="creation" class="container">
     <div>
-      <Modale v-if="revele" class="creation" :revele="revele" :toggleModale="toggleModale" :id="id" />
+      <Modale v-if="showPopUp" class="creation" :showPopUp="showPopUp" :show="show" :id="id" />
     </div>
-    <div v-show="creation" @click="toggleModale" class="btn btn-success">Create new Product</div>
+    <div v-show="creation" @click="show" class="btn btn-success">Create new Product</div>
 
 
     <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative">
@@ -61,13 +61,15 @@ export default {
     fetchData() {
 
     },
-    toggleModale() {
-      this.revele = !this.revele;
-    }
+    show() {
+      console.log("toggle");
+      this.showPopUp = !this.showPopUp;
+    },
+
   },
   data() {
     return {
-      revele: false,
+      showPopUp: false,
     }
   },
   components: {
