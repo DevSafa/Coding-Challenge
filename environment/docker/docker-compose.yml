@@ -1,5 +1,20 @@
 version: "3.7"
 services:
+    mysql-db:
+      image: mysql:8.0
+      container_name: mysql
+      restart: unless-stopped
+      environment:
+        MYSQL_DATABASE: ${DB_DATABASE}
+        MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        MYSQL_PASSWORD: ${DB_PASSWORD}
+        MYSQL_USER: ${DB_USERNAME}
+      ports:
+       - "3306:3306" 
+      networks:
+        - my_network
+
+
     laravel-app:
       build:
         args:
@@ -15,7 +30,9 @@ services:
         - /goinfre/sbarka/Coding-challenge/Projects/challenge:/var/www
       networks:
         - my_network
-    webserv-nginx:
+
+
+    webserver-nginx:
       image: nginx:1.17-alpine
       container_name: webserver-nginx
       restart: unless-stopped
