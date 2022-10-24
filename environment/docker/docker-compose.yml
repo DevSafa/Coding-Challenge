@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+    laravel-app:
+      build:
+        args:
+          user: sbarka
+          uid: 1000
+        context: ./
+        dockerfile: Dockerfile
+      image: laravel-app
+      container_name: laravel-app
+      restart: unless-stopped
+      working_dir: /var/www/
+      volumes:
+        - /goinfre/sbarka/Coding-challenge/Projects/challenge:/var/www
+      networks:
+        - my_network
+networks:
+  my_network:
+    driver: bridge
