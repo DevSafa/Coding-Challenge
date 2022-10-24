@@ -2,24 +2,17 @@
 
 namespace App\Models;
 
-use Hamcrest\Description;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use HasFactory;
-    protected $fillable = ['name','description','price','image'];
-    public function upload($filename,$image)
-    {        
-        $image->storeAs('images',$filename); 
-    }
+	use HasFactory;
 
-    public function categories()
-    {
-        return $this->belongsToMany(Category::class);
-    }
+	protected $fillable = ['name','description','price','image'];
 
-
-    
+	public function categories()
+	{
+		return $this->belongsToMany(Category::class);
+	}
 }

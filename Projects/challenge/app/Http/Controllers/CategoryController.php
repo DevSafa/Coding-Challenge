@@ -1,42 +1,19 @@
 <?php
-
 namespace App\Http\Controllers;
-use App\Repositories\Category\CategoryRepositoryInterface;
-use Illuminate\Http\Request;
+
+use App\Repositories\Category\CategoryRepository;
+
+
 class CategoryController extends Controller
 {
 
-    public function __construct(CategoryRepositoryInterface $categoryRepositoryInterface)
+    public function getCategories()
     {
-        $this->categoryRepository = $categoryRepositoryInterface;
+        return CategoryRepository::getCategories();
     }
 
-    public function categories()
+    public function getProductsCategory($id)
     {
-        return $this->categoryRepository->categories();
-    }
-
- 
-    public function parents()
-    {
-        return  $this->categoryRepository->parents();
-    }
-
-
-    public function children($id)
-    {
-        return $this->categoryRepository->children($id);
-    }
-
-
-    public function parent($id)
-    {
-        return $this->categoryRepository->parent($id);
-    }
-
-   
-    public function products($id)
-    {
-        return $this->categoryRepository->products($id);
+        return CategoryRepository::getProductsCategory($id);
     }
 }

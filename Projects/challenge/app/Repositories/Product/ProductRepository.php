@@ -2,63 +2,53 @@
 namespace App\Repositories\Product;
 
 use App\Models\Product;
-use App\Models\Category;
+use App\Repositories\Category\CategoryRepository;
 
-use App\Repositories\Category\CategoryRepositoryInterface;
-
-
-class ProductRepository implements ProductRepositoryInterface 
+class ProductRepository
 {
-    public function __construct(CategoryRepositoryInterface $categoryRepositoryInterface)
-    {
-        $this->categoryRepository = $categoryRepositoryInterface;
-    }
-    /** get all Products in database */
-    public function products()
-    {
-        return Product::get();
-    }
-    public function storeCli($name, $description, $price , $category)
-    {
-        $product = Product::create([
-            "name" => $name,
-            "description" => $description,
-            "price" => (float)$price,
-            "image" => "test",
-        ]);
-        $categories = [];
-        $parent = Category::where("name", $category)->get();
-        while(!empty($parent->toArray()))
-        {
-            array_push($categories , $parent[0]->id);
-            $parent = $this->categoryRepository->parent($parent[0]->id);
-        }
-        $product->categories()->sync($categories);
-    }
+	private static function attachCategories($product,$category)
+	{
+		$categories = [];
+		array_push($categories , $category);
+		$parent = CategoryRepository::getParent($category); 
+		while (!empty($parent->toArray()) )
+		{
+			array_push($categories, $parent[0]->id);
+			$parent = CategoryRepository::getParent($parent[0]->id);
+		} 
+		$product->categories()->sync($categories);
+	}
 
-    public function store($request)
-    {
-        $name =  uniqid() . '-' .$request->name . '.' . $request->infos->file('image')->extension();
-        $product = Product::create([
-            "name" => $request->infos->name,
-            "description" => $request->infos->description,
-            "price" => (float)$request->infos->price,
-            "image" => $name,
-        ]);
-        
-        $categories = [];
-        array_push($categories , $request->infos->category);
-        $parent = $this->categoryRepository->parent($request->category);
-        while(!empty($parent->toArray()))
-        {
-            array_push($categories , $parent[0]->id);
-            $parent = $this->categoryRepository->parent($parent[0]->id);
-        }
-       
-     
-        $product->categories()->sync($categories);
-        $product->upload($name,$request->infos->file('image'));
 
-    }
+	public function uploadProductImage($image)
+	{
+		$image->storeAs('public/images',$image);
+	}
+
+
+	public function createProduct($request)
+	{
+		$name =  uniqid() . '-' .$request->name . '.' . $request->file('image')->extension();
+
+		$product = Product::create(
+			[
+				"name" => $request['name'],
+				"description" => $request['description'],
+				"price" => (float)$request['price'],
+				"image" => $name,
+			]
+		);
+
+		$this->attachCategories($product,$request['category']);
+		$this->uploadProductImage($request->file('image'));
+
+		return $product;
+	}
+
+	public static function getProducts()
+	{
+		return Product::get();
+	}
 }
+
 ?>
