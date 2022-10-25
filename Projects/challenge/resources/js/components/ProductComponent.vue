@@ -61,7 +61,6 @@ export default {
 
     },
     show() {
-      console.log("toggle");
       this.showPopUp = !this.showPopUp;
     },
 

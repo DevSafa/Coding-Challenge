@@ -13,6 +13,7 @@
 		<div class="Products">
 			
 			<h1>Products</h1>
+			<h5 >{{ this.category_name }}</h5>
 			<div class="custom-control custom-checkbox" v-show="this.products.length != 0">
 				<input type="checkbox" class="custom-control-input" v-on:change="sortByPrice($event)">
 				<label class="custom-control-label" for="customCheck1">sort By Price</label>
@@ -41,6 +42,7 @@ import productComponent from './ProductComponent.vue'
 			products: [],
 			temp : [],
 			create : false,
+			category_name : ''
 		}
 	},
 	created() {
@@ -77,8 +79,9 @@ import productComponent from './ProductComponent.vue'
 				this.products = this.temp;
 		},
 
-		changeFromChild(id) 
+		changeFromChild(id,name) 
 		{
+			this.category_name = name;
 			axios.get(`/category/products/${id}`)
 				.then(res => {
 					this.create = true;
@@ -95,4 +98,12 @@ import productComponent from './ProductComponent.vue'
 	}
 }
 </script>
+
+
+<style lang="scss" scoped>
+h5 {
+	color:rgb(211, 174, 174) 
+}
+
+</style>
 

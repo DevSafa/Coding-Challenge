@@ -25,6 +25,7 @@ export default {
 		return {
 			showChildren: false,
 			categories: [],
+    
 		}   
     },
 
@@ -48,14 +49,14 @@ export default {
     },
 
     methods: {
-        changeFromChild(id) 
+        changeFromChild(id, n) 
 		{
-            this.$emit('callChange', id);
+            this.$emit('callChange', id,n);
         },
         showCategory() 
 		{
 			this.showChildren = !this.showChildren;
-			this.$emit('callChange', this.id);
+			this.$emit('callChange', this.id, this.name);
 		}
     },
 }
