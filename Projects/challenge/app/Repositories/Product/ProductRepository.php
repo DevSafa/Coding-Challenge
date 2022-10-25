@@ -4,6 +4,7 @@ namespace App\Repositories\Product;
 use App\Models\Product;
 use App\Repositories\Category\CategoryRepository;
 
+
 class ProductRepository
 {
 	private static function attachCategories($product,$category)
@@ -20,16 +21,17 @@ class ProductRepository
 	}
 
 
-	private static  function uploadProductImage($image)
+	private static  function uploadProductImage($image,$name)
 	{
-		$image->storeAs('public/images',$image);
+		$image->storeAs('public/images',$name);
+	
 	}
 
 
 	public static  function createProduct($request)
 	{
 		$name =  uniqid() . '-' .$request->name . '.' . $request->file('image')->extension();
-
+		
 		$product = Product::create(
 			[
 				"name" => $request['name'],
@@ -38,9 +40,10 @@ class ProductRepository
 				"image" => $name,
 			]
 		);
-
+		
 		self::attachCategories($product,$request['category']);
-		self::uploadProductImage($request->file('image'));
+		$request->file('image')->storeAs('public/images',$name);
+		self::uploadProductImage($request->file('image'),$name);
 
 		return $product;
 	}
