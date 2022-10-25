@@ -47,7 +47,7 @@ export default {
 
 	data() {
 		return {
-			name: 'dds',
+			name: '',
 			description: '',
 			price: '',
 			image: null,

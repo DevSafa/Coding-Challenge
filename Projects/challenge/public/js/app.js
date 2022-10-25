@@ -5443,7 +5443,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['showPopUp', 'show', 'id'],
   data: function data() {
     return {
-      name: 'dds',
+      name: '',
       description: '',
       price: '',
       image: null,
