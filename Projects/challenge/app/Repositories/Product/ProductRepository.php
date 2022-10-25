@@ -38,7 +38,7 @@ class ProductRepository
 				"image" => $name,
 			]
 		);
-		
+	//	$product->setNameImage($name);
 		self::attachCategories($product,$request['category']);
 		self::uploadProductImage($request->file('image'),$name);
 

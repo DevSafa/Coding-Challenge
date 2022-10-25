@@ -28,7 +28,7 @@ class ProductController extends Controller
 		if ($validator->fails())
 			return response($validator->errors()->toArray(),400);
 		else
-			return ProductRepository::createProduct($request);
+			return response(ProductRepository::createProduct($request),201);
 	}
 
 }
