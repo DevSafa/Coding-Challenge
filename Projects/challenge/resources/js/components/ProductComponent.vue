@@ -1,7 +1,7 @@
 <template>
   <div v-show="creation" class="container">
     <div>
-      <Modale v-if="showPopUp" class="creation" :showPopUp="showPopUp" :show="show" :id="id" />
+      <Modale v-if="showPopUp"  class="creation" :showPopUp="showPopUp" :show="show" :id="id" />
     </div>
     <div v-show="creation" @click="show" class="btn btn-success">Create new Product</div>
 

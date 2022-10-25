@@ -2,8 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Repositories\Product\ProductRepository;
-use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Console\Command;
 // php artisan make:command CreateProduct --command=create:product
 class CreateProduct extends Command
@@ -28,11 +26,7 @@ class CreateProduct extends Command
      *
      * @return void
      */
-    public function __construct(ProductRepositoryInterface $productRepositoryInterface)
-    {
-        parent::__construct();
-        $this->productRepositoryInterface = $productRepositoryInterface;
-    }
+
 
     /**
      * Execute the console command.
@@ -41,12 +35,6 @@ class CreateProduct extends Command
      */
     public function handle()
     {
-        $name = $this->ask('Product\'s Name ');
-        $description = $this->ask('Describe your product ');
-        $price = $this->ask('Product\'s Price ');
-        $category = $this->ask('Product\'s Category');
-
-        $this->productRepositoryInterface->storeCli($name, $description, $price , $category);
         
         return 0;
     }

@@ -1,8 +1,8 @@
 <template>
 	<div class="category-item">
-		<div class="name" @click="showCategory()"  :style="{ paddingLeft: space * 30 + 10 + 'px'}">
+		<div class="name"  @click="showCategory()" :style="{ paddingLeft: space * 30 + 10 + 'px'}">
 			<div>
-				<button type="button" class="btn-style btn btn-outline-dark">{{ name }}</button>
+				<button  type="button" class="btn-style btn btn-outline-dark">{{ name }}</button>
 			</div>
 		</div>
 		<div class="item-container" v-show="showChildren">
@@ -49,9 +49,9 @@ export default {
     },
 
     methods: {
-        changeFromChild(id, n) 
+        changeFromChild($id, $n) 
 		{
-            this.$emit('callChange', id,n);
+            this.$emit('callChange', $id,$n);
         },
         showCategory() 
 		{

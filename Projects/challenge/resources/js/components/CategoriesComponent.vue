@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-		<div class="category">
+		<div class="categories">
 			<h1>Categories</h1>
 			<categoryItemComponent v-for="(item, index) in categoryTree" 
 							:key   = "index" 
@@ -64,6 +64,7 @@ import productComponent from './ProductComponent.vue'
 				})
 			this.create = false;
 		},
+
 		sortByPrice($event)
 		{
 			console.log("sortyByPrice");
@@ -82,6 +83,7 @@ import productComponent from './ProductComponent.vue'
 		changeFromChild(id,name) 
 		{
 			this.category_name = name;
+			console.log("id :" , id);
 			axios.get(`/category/products/${id}`)
 				.then(res => {
 					this.create = true;

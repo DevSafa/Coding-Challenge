@@ -4,8 +4,10 @@ namespace Tests\Feature;
 
 use App\Models\Category;
 use App\Models\Product;
+use Database\Seeders\CategorySeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Testing\File;
 use Tests\TestCase;
 
 class ProductTest extends TestCase
@@ -19,9 +21,19 @@ class ProductTest extends TestCase
      */
     public function test_example()
     {
-    
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        
+        //100 is the size in KB
+     
+        // $file = File::create('image.png',100);
+        // $this->json('POST','/create',[
+            
+        //     "name" => "safaaaaaa",
+        //     "description" => "hello wolrddd",
+        //     "price" => 13.25,
+        //     "image" => "shksdjfljl.png",
+            
+        // ]);
+        $this->assertDatabaseHas('products' ,['name' => "prod1"]);
+        // $this->assertTrue(true);
     }
 }

@@ -20,13 +20,11 @@ class ProductRepository
 		$product->categories()->sync($categories);
 	}
 
-
 	private static  function uploadProductImage($image,$name)
 	{
 		$image->storeAs('public/images',$name);
 	
 	}
-
 
 	public static  function createProduct($request)
 	{
@@ -42,7 +40,6 @@ class ProductRepository
 		);
 		
 		self::attachCategories($product,$request['category']);
-		$request->file('image')->storeAs('public/images',$name);
 		self::uploadProductImage($request->file('image'),$name);
 
 		return $product;

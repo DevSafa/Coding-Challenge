@@ -11,7 +11,6 @@ environment/homestead/user-customizations.sh
 environment/homestead/.phpunit.result.cache
 environment/homestead/wsl-init.log
 environment/homestead/.backup/*
-about.txt
 Projects/challenge/node_modules
 Projects/challenge/public/hot
 Projects/challenge/public/storage
