@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Product;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Repositories\Category\CategoryRepository;
 
@@ -38,7 +39,7 @@ class ProductRepository
 				"image" => $name,
 			]
 		);
-	//	$product->setNameImage($name);
+
 		self::attachCategories($product,$request['category']);
 		self::uploadProductImage($request->file('image'),$name);
 
@@ -48,6 +49,21 @@ class ProductRepository
 	public static function getProducts()
 	{
 		return Product::get();
+	}
+
+	public static function createProductCli($name, $description,$price,$category)
+	{
+		$product = Product::create(
+			[
+				"name" => $name,
+				"description" => $description,
+				"price" => (float)$price,
+				"image" => "test",
+			]
+		);
+		self::attachCategories($product,$category);
+		
+	
 	}
 }
 
