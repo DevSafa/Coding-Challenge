@@ -9,21 +9,22 @@ class Product extends Model
 {
 	use HasFactory;
 
-	private $_name;
-	protected $fillable = ['name','description','price','image'];
+	protected $fillable = [
+					'name',
+					'description',
+					'price',
+					'image'
+				];
+	protected $visible = [
+					'name',
+					'description',
+					'price',
+					'image'
+				];
+
 
 	public function categories()
 	{
 		return $this->belongsToMany(Category::class);
-	}
-
-	public function setNameImage($name)
-	{
-		$this->_name = $name;
-	}
-
-	public function getImageName()
-	{
-		return $this->_name;
 	}
 }
