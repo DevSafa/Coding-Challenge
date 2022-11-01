@@ -1,5 +1,5 @@
 <template>
-  <div v-show="creation" class="container">
+  <div  class="container">
     <div>
       <Modale v-if="showPopUp"  class="creation" :showPopUp="showPopUp" :show="show" :id="id" />
     </div>
