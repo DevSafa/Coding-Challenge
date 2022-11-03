@@ -12,7 +12,7 @@
 
 					</div>
 					<div>
-						<input type="number" class="form-control rounded border-white mb-3 form-input"
+						<input class="form-control rounded border-white mb-3 form-input"
 							placeholder="price" required v-model="price">
 					</div>
 					<div>
