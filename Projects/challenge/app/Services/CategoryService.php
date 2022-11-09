@@ -12,4 +12,9 @@ class CategoryService implements CategoryServiceInterface {
 	{
 		$this->categoryRepository = $categoryRepository;
 	}
+
+	public function index() : array
+	{
+		return $this->categoryRepository->index();
+	}
 }

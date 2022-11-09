@@ -12,9 +12,4 @@ class ProductService implements ProductServiceInterface {
 	{
 		$this->productRepository = $productRepository;
 	}
-
-	public function injectionTest()
-	{
-		return $this->productRepository->injectionTest();
-	}
 }

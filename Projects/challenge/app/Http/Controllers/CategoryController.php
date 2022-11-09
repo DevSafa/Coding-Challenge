@@ -13,4 +13,9 @@ class CategoryController extends Controller
 	{
 		$this->categoryService = $categoryService;
 	}
+
+	public function index()
+	{
+		return $this->categoryService->index();
+	}
 }

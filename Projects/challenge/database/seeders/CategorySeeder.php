@@ -92,6 +92,22 @@ class CategorySeeder extends Seeder
                 'name' => 'Clothes',
                 'parent_id' => NULL,
             ],
+            [
+                'name' => 'Casual',
+                'parent_id' => 19,
+            ],
+            [
+                'name' => 'Formal',
+                'parent_id' => 19,
+            ],
+            [
+                'name' => 'T-shirt',
+                'parent_id' => 20,
+            ],
+            [
+                'name' => 'Tink-jeans',
+                'parent_id' => 20,
+            ],
         ]);
     }
 }

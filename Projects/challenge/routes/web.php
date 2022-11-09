@@ -12,8 +12,9 @@
 |
 */
 
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 
-Route::get('/',[ProductController::class,"index"]);
+
+Route::get('/categories',[CategoryController::class,"index"]);
 
 

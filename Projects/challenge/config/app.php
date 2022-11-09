@@ -179,6 +179,7 @@ return [
          * Custom providers
          */
         App\Providers\ProductServiceProvider::class,
+        App\Providers\CategoryServiceProvider::class,
 
     ],
 
