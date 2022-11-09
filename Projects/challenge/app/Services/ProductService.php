@@ -8,8 +8,13 @@ class ProductService implements ProductServiceInterface {
 
 	private $productRepository;
 
-	public function __contruct(ProductRepositoryInterface $productRepository)
+	public function __construct(ProductRepositoryInterface $productRepository)
 	{
 		$this->productRepository = $productRepository;
+	}
+
+	public function injectionTest()
+	{
+		return $this->productRepository->injectionTest();
 	}
 }

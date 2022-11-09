@@ -9,7 +9,7 @@ class CategoryController extends Controller
 {
 	private $categoryService;
 
-	public function __contruct(CategoryServiceInterface $categoryService)
+	public function __construct(CategoryServiceInterface $categoryService)
 	{
 		$this->categoryService = $categoryService;
 	}

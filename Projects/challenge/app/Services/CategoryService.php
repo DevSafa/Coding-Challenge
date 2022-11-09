@@ -8,7 +8,7 @@ class CategoryService implements CategoryServiceInterface {
 
 	private $categoryRepository;
 
-	public function __contruct(CategoryRepositoryInterface $categoryRepository)
+	public function __construct(CategoryRepositoryInterface $categoryRepository)
 	{
 		$this->categoryRepository = $categoryRepository;
 	}
