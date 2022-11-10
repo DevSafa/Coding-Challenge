@@ -1,7 +1,9 @@
 <?php
 namespace App\Interfaces;
 
-interface CategoryServiceInterface {
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
-	public function index() : array;
+interface CategoryServiceInterface 
+{
+	public function index() : EloquentCollection;
 }
