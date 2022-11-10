@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,20 +9,44 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
-    use HasFactory;
+	/**
+	 * Get a new factory instance for the model.
+	 *
+	 * @param  mixed  $parameters
+	 * @return \Illuminate\Database\Eloquent\Factories\Factory
+	 */
+	use HasFactory;
 	
+	/**
+	 * the relation to eager load on every query
+	 */
 	protected $with = ['children'];
 
+	/**
+	 * get The products that belong to a category. 
+	 * 
+	 * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
 	public function products() : BelongsToMany
 	{
 		return $this->belongsToMany(Product::class);
 	}
 
+	/**
+	 * get the categories children of a category
+	 * 
+	 * @return HasMany
+	 */
 	public function children() : HasMany
 	{
 		return $this->hasMany(Category::class , 'parent_id');
 	}
 
+	/**
+	 * get category parent of a category
+	 * 
+	 * @return BelongsTo
+	 */
 	public function parent() : BelongsTo
 	{
 		return $this->belongsTo(Category::class ,'parent_id');
