@@ -1,21 +1,34 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Interfaces\CategoryServiceInterface;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-	private $categoryService;
+	/**
+	 * The categoryService instance.
+	*/
+	protected $categoryService;
 
+	/**
+	 * Create a new CategoryController instance.
+	 *
+	 * @param  CategoryService  $categoryService
+	 * 
+	 * @return void
+	*/
 	public function __construct(CategoryServiceInterface $categoryService)
 	{
 		$this->categoryService = $categoryService;
 	}
 
-	public function index()
+	/**
+	 * Call the  @method index in CategoryService instance 
+	 *
+	 * @return  array
+	*/
+	public function index() : array
 	{
-		return $this->categoryService->index();
+		return $this->categoryService->index()->toArray();
 	}
 }
