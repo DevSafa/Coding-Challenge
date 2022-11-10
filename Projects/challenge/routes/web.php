@@ -13,8 +13,10 @@
 */
 
 use App\Http\Controllers\CategoryController;
-
+use App\Http\Controllers\ProductController;
 
 Route::get('/categories',[CategoryController::class,"index"]);
+Route::post('/categories',[ProductController::class,"store"]);
+
 
 
