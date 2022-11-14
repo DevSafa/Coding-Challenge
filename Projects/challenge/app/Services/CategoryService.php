@@ -29,4 +29,10 @@ class CategoryService implements CategoryServiceInterface {
 	{
 		return $this->categoryRepository->index();
 	}
+
+	public function getCategoryId(string $name) : int
+	{
+		return $this->categoryRepository->getCategoryId($name);
+	}
+
 }

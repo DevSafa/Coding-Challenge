@@ -16,5 +16,10 @@ class CategoryRepository implements CategoryRepositoryInterface {
     {
         return Category::whereNull('parent_id')->get();
     }
+
+    public function getCategoryId(string $name) : int
+    {
+        return Category::where('name',$name)->get()[0]['id'];
+    }
 }
 

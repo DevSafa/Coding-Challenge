@@ -23,6 +23,18 @@ class Category extends Model
 	protected $with = ['children'];
 
 	/**
+	 * The attributes that should be visible in arrays.
+	 *
+	 * @var array
+	 */
+	protected $visible = [
+		'id',
+		'name',
+		'children',
+	];
+
+
+	/**
 	 * get The products that belong to a category. 
 	 * 
 	 * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
