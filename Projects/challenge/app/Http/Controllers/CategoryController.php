@@ -6,7 +6,7 @@ use App\Interfaces\CategoryServiceInterface;
 class CategoryController extends Controller
 {
 	/**
-	 * The categoryService instance.
+	 * The category service instance.
 	*/
 	protected $categoryService;
 
@@ -24,6 +24,7 @@ class CategoryController extends Controller
 
 	/**
 	 * Call the  @method index in CategoryService instance 
+	 * to get all categories and their sub categories
 	 *
 	 * @return  array
 	*/
