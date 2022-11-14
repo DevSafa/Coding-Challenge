@@ -6,6 +6,7 @@ use App\Interfaces\ProductServiceInterface;
 use App\Interfaces\ProductRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection as SupportCollection;
+use Illuminate\Http\UploadedFile as Image;
 
 class ProductService implements ProductServiceInterface {
 
@@ -82,8 +83,16 @@ class ProductService implements ProductServiceInterface {
 		return (float)($this->values['price']);
 	}
 
+	protected function uploadImage(Image $image, string $name) : void 
+	{
+		$image->storeAs('public/images',$name);
+	
+	}
+
 	/**
 	 * the final data to pass to database Repository
+	 * 
+	 * uploading image in storage
 	 *
 	 * @param  Illuminate\Support\Collection  $values
 	 * 
@@ -101,5 +110,6 @@ class ProductService implements ProductServiceInterface {
 		]);
 		
 		$this->productRepository->storeProduct(($collection),$values['categories']);
+		$this->uploadImage($values['image'],$collection['image']);
 	}
 }
