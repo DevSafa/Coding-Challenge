@@ -1,11 +1,10 @@
 <?php
 namespace App\Interfaces;
 
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection as SupportCollection;
 
 interface ProductServiceInterface 
 {
-	public function index() : EloquentCollection;
-	public function storeProduct(SupportCollection $values) : int ;
+	public function index() : array;
+	public function storeProduct(SupportCollection $values) : void;
 }
