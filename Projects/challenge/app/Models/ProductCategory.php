@@ -17,6 +17,12 @@ class ProductCategory extends Model
 	*/
     use HasFactory;
 
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+    */
+    protected $table="category_product";
     
     /**
 	 * The attributes that are mass assignable.
