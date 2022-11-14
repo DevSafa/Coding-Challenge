@@ -15,14 +15,9 @@ class ProductController extends Controller
 	protected $productService;
 
 	/**
-	 * The productService instance.
+	 * The categoryService instance.
 	*/
 	protected $categoryService;
-
-	/**
-	 * The ProductCategoryService instance.
-	*/
-	protected $ProductCategoryService;
 
 	/**
 	 * Create a new ProductController instance.
@@ -33,50 +28,39 @@ class ProductController extends Controller
 	*/
 	public function __construct(
 			ProductServiceInterface $productService , 
-			ProductCategoryServiceInterface $ProductCategoryService,
 			CategoryServiceInterface $categoryService)
 	{
 		$this->productService = $productService;
 		$this->categoryService = $categoryService;
-		$this->ProductCategoryService = $ProductCategoryService;
 
 	}
 
 	/**
-	 * Call the  @method index in ProductService instance 
-	 *
+	 * Call the  @method index in ProductService instance to get all products
+	 * 
 	 * @return  array
 	*/
 	public function index() : array
 	{
-		return $this->productService->index()->toArray();
+		return $this->productService->index();
 	}
 
 	/**
 	 * 
-	 * validate data.
+	 * validate data using CreateProductRequest 
 	 * 
-	 * call Product service to store Product data  and get id of the product
+	 * get data for Category and Product services  using CreateProductRequest
 	 * 
-	 * call Category service to get Id of category from it's name
-	 * 
-	 * call ProductCategory to store many to many relationship 
-	 *
 	 * @param  App\Http\Requests\CreateProductRequest  $request
 	 * 
 	 * @return  void
 	*/
 	public function store(CreateProductRequest $request) : void
 	{
-		$dataForProductService = $request->getDataForProductService();
-		$product_id = $this->productService->storeProduct($dataForProductService);
-
 		$dataForCategoryService = $request->getDataForCategoryService();
-		$category_id =  $this->categoryService->getCategoryId($dataForCategoryService);
+		$dataForProductService = $request->getDataForProductService();
 
-		$this->ProductCategoryService->AddProductCategory(collect([
-			"product_id" => $product_id,
-			"category_id" => $category_id
-		]));
+		$categories =  $this->categoryService->getCategories($dataForCategoryService);
+		$this->productService->storeProduct($dataForProductService->put('categories',$categories));
 	}
 }

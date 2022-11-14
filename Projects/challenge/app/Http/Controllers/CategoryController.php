@@ -30,6 +30,6 @@ class CategoryController extends Controller
 	*/
 	public function index() : array
 	{
-		return $this->categoryService->index()->toArray();
+		return $this->categoryService->index();
 	}
 }
