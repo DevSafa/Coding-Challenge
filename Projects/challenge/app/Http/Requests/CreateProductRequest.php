@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Collection as SupportCollection;
 
 class CreateProductRequest extends FormRequest
 {
@@ -14,6 +15,7 @@ class CreateProductRequest extends FormRequest
     */
     protected $stopOnFirstFailure = true;
     
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -74,6 +76,29 @@ class CreateProductRequest extends FormRequest
             ], 400)
           ); 
                  
+    }
+
+    /**
+     * here prepare data for Product service ('name' , 'description' , 'price' ,'image')
+     *
+     * @return Illuminate\Support\Collection
+    */
+    public function getDataForProductService() : SupportCollection
+    {
+        $validated = $this->safe()->except(['category']);
+        return collect($validated);
+    }
+
+
+    /**
+     * here prepare data for ProductCategory service ('category')
+     *
+     * @return Illuminate\Support\Collection
+     */
+    public function getDataForProductCategoryService() : SupportCollection
+    {
+        $validated = $this->safe()->only(['category']);
+        return collect($validated);
     }
  }
 
