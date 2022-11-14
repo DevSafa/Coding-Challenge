@@ -91,14 +91,14 @@ class CreateProductRequest extends FormRequest
 
 
     /**
-     * here prepare data for ProductCategory service ('category')
+     * here prepare data for Category service ('category')
      *
      * @return Illuminate\Support\Collection
      */
-    public function getDataForProductCategoryService() : SupportCollection
+    public function getDataForCategoryService() : string
     {
         $validated = $this->safe()->only(['category']);
-        return collect($validated);
+        return $validated['category'];
     }
  }
 
