@@ -19,13 +19,14 @@ class ProductRepository implements ProductRepositoryInterface {
     }
 
     /**
-     * store product in databAse .
+     * store product in database .
+     * attach categories to product .
      * 
      * @param Illuminate\Support\Collection  $values
      */
-	public function storeProduct(SupportCollection $values) : int 
+	public function storeProduct(SupportCollection $values, array $categories) : void 
     {
             $product = Product::create($values->toArray());
-            return $product->id;
+            $product->categories()->sync($categories);
     }
 }

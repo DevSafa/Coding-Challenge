@@ -3,7 +3,6 @@ namespace App\Services;
 
 use App\Interfaces\CategoryServiceInterface;
 use App\Interfaces\CategoryRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 class CategoryService implements CategoryServiceInterface {
 	private $categoryRepository;
@@ -21,18 +20,40 @@ class CategoryService implements CategoryServiceInterface {
 	}
 
 	/**
-	 * get all categories
+	 * get all categories and their sub categories.
 	 *
-	 * @return  Illuminate\Database\Eloquent\Collection
+	 * @return  array
 	*/
-	public function index() : EloquentCollection
+	public function index() : array
 	{
-		return $this->categoryRepository->index();
+		return $this->categoryRepository->index()->toArray();
+	}
+	
+	/**
+	 * get categories parents of a single category
+	 * 
+	 * @param string $name
+	 * 
+	 * @return array
+	 */
+	public function getCategories(string $name) : array
+	{
+		/** get Category id  */
+		$id = $this->categoryRepository->getCategoryId($name);
+
+		/* store categories in array */
+		$categories = array();
+		array_push($categories, $id);
+		
+		
+		$parent = $this->categoryRepository->getParent($id); 
+		while ($parent->isNotEmpty())
+		{
+			array_push($categories, $parent[0]['id']);
+			$parent = $this->categoryRepository->getParent($parent[0]->id);
+		}
+		return $categories;
 	}
 
-	public function getCategoryId(string $name) : int
-	{
-		return $this->categoryRepository->getCategoryId($name);
-	}
 
 }

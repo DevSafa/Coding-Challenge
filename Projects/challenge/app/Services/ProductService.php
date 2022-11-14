@@ -36,9 +36,9 @@ class ProductService implements ProductServiceInterface {
 	 *
 	 * @return  Illuminate\Database\Eloquent\Collection
 	*/
-	public function index() : EloquentCollection
+	public function index() :array
 	{
-		return $this->productRepository->index();
+		return $this->productRepository->index()->toArray();
 	}
 
 	/**
@@ -89,7 +89,7 @@ class ProductService implements ProductServiceInterface {
 	 * 
 	 * @return  void
 	*/
-	public function storeProduct(SupportCollection $values) : int 
+	public function storeProduct(SupportCollection $values) : void
 	{	
 		$this->values = $values;
 
@@ -98,8 +98,8 @@ class ProductService implements ProductServiceInterface {
 			'description' => $values['description'],
 			'price' => $this->getPrice(),
 			'image' =>$this->generateImageName()
-
 		]);
-		return $this->productRepository->storeProduct(($collection));
+		
+		$this->productRepository->storeProduct(($collection),$values['categories']);
 	}
 }

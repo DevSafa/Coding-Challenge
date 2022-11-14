@@ -21,5 +21,10 @@ class CategoryRepository implements CategoryRepositoryInterface {
     {
         return Category::where('name',$name)->get()[0]['id'];
     }
+
+    public function getParent($id) : EloquentCollection
+	{
+		return Category::find($id)->parent()->get();
+	}
 }
 
