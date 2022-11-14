@@ -3,8 +3,8 @@ services:
     laravel-app:
       build:
         args:
-          user: ${USER}
-          uid: ${UID}
+          user: safa
+          uid:  1000
         context: ./
         dockerfile: Dockerfile
       image: laravel-app
@@ -26,6 +26,16 @@ services:
       ports:
        - "3306:3306"
 
+    phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      container_name: pma
+      environment:
+        PMA_HOST: mysql-db
+        PMA_PORT: 3306
+        PMA_ARBITRARY: 1
+      restart: always
+      ports:
+        - 8081:80
 
     webserver-nginx:
       image: nginx:1.17-alpine
