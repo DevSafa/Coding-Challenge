@@ -23,8 +23,9 @@ class ProductRepository implements ProductRepositoryInterface {
      * 
      * @param Illuminate\Support\Collection  $values
      */
-	public function store(SupportCollection $values) : void
+	public function storeProduct(SupportCollection $values) : int 
     {
-            Product::create($values->toArray());
+            $product = Product::create($values->toArray());
+            return $product->id;
     }
 }

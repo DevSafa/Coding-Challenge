@@ -7,5 +7,5 @@ use Illuminate\Support\Collection as SupportCollection;
 interface ProductServiceInterface 
 {
 	public function index() : EloquentCollection;
-	public function store(SupportCollection $values);
+	public function storeProduct(SupportCollection $values) : int ;
 }
