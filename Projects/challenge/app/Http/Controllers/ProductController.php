@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateProductRequest;
 use App\Interfaces\ProductServiceInterface;
 use App\Interfaces\CategoryServiceInterface;
 use App\Interfaces\ProductCategoryServiceInterface;
-
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
@@ -55,12 +56,15 @@ class ProductController extends Controller
 	 * 
 	 * @return  void
 	*/
-	public function store(CreateProductRequest $request) : void
+	public function store(CreateProductRequest $request) : Response
 	{
 		$dataForCategoryService = $request->getDataForCategoryService();
 		$dataForProductService = $request->getDataForProductService();
 
 		$categories =  $this->categoryService->getCategories($dataForCategoryService);
-		$this->productService->storeProduct($dataForProductService->put('categories',$categories));
+		$product = $this->productService->storeProduct($dataForProductService->put('categories',$categories));
+
+		return response($product , 201)
+                  ->header('Content-Type', 'application/json');
 	}
 }
