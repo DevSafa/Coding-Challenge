@@ -98,7 +98,7 @@ class ProductService implements ProductServiceInterface {
 	 * 
 	 * @return  void
 	*/
-	public function storeProduct(SupportCollection $values) : void
+	public function storeProduct(SupportCollection $values) : array
 	{	
 		$this->values = $values;
 
@@ -109,7 +109,10 @@ class ProductService implements ProductServiceInterface {
 			'image' =>$this->generateImageName()
 		]);
 		
-		$this->productRepository->storeProduct(($collection),$values['categories']);
+		$product = $this->productRepository->storeProduct(($collection),$values['categories']);
 		$this->uploadImage($values['image'],$collection['image']);
+		return $product;
+
+
 	}
 }
