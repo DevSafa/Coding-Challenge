@@ -180,6 +180,8 @@ return [
          */
         App\Providers\ProductServiceProvider::class,
         App\Providers\CategoryServiceProvider::class,
+        App\Providers\CliServiceProvider::class,
+
         // App\Providers\ProductCategoryServiceProvider::class,
 
 
