@@ -6,7 +6,6 @@ use Illuminate\Support\Collection as SupportCollection;
 
 interface ProductRepositoryInterface 
 {
-    public function index() : EloquentCollection;
-    public function storeProduct(SupportCollection $values, array $categories) : array;
+    public function index(): EloquentCollection;
+    public function storeProduct(SupportCollection $values, array $categories): array;
 }
-
