@@ -5,33 +5,45 @@ use App\Interfaces\CategoryRepositoryInterface;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Collection AS EloquentCollection;
 
-class CategoryRepository implements CategoryRepositoryInterface {
-
+class CategoryRepository implements CategoryRepositoryInterface 
+{
     /**
      * get all parent categories  from database  and their children categories
-     * 
-     *  @return Illuminate\Database\Eloquent\Collection
+     *  @return EloquentCollection
      */
-	public function index() : EloquentCollection
+    public function index(): EloquentCollection
     {
         return Category::whereNull('parent_id')->get();
     }
 
-    public function getCategoryId(string $name) : int
+    /**
+     * get category with specific name
+     * @param string $name
+     * @return int
+     */
+    public function getCategoryId(string $name): int
     {
         return Category::where('name',$name)->get()[0]['id'];
     }
 
-    public function getParent($id) : EloquentCollection
-	{
-		return Category::find($id)->parent()->get();
-	}
-
-    public function getProducts(int $id) : EloquentCollection
+    /**
+     * get parent of a category
+     * @param int $id
+     * @return EloquentCollection
+     */
+    public function getParent(int $id): EloquentCollection
     {
-		$products = Category::find($id)->products()->get();
-        return $products;
+        return Category::find($id)->parent()->get();
+    }
 
+    /**
+     * get products of a category
+     * @param int $id
+     * @return EloquentCollection
+     */
+    public function getProducts(int $id): EloquentCollection
+    {
+        $products = Category::find($id)->products()->get();
+        return $products;
     }
 }
-
