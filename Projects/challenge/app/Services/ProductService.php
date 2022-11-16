@@ -100,7 +100,7 @@ class ProductService implements ProductServiceInterface
      * @param  SupportCollection  $values
      * @return  array
     */
-    public function storeProduct(SupportCollection $values) : array
+    public function storeProduct(SupportCollection $values): array
     {	
         $this->values = $values;
 

@@ -87,7 +87,7 @@ class CliService implements CliServiceInterface
      * @param string $url
      * @return File
      */
-    public function getFile(string $url) : File
+    public function getFile(string $url): File
     {
         $fileContent = @file_get_contents($url);
         
