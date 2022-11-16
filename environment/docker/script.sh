@@ -10,3 +10,5 @@ docker-compose exec laravel-app php artisan storage:link
 docker-compose exec laravel-app php artisan db:seed ProductSeeder
 docker-compose exec laravel-app php artisan db:seed CategorySeeder
 docker-compose exec laravel-app php artisan db:seed ProductCategorySeeder
+
+
