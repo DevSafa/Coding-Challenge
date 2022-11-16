@@ -9,8 +9,6 @@ use App\Models\Product;
 use Illuminate\Http\Testing\File;
 use Database\Seeders\CategorySeeder;
 use Illuminate\Foundation\Testing\WithFaker;
-use App\Http\Requests\CreateProductRequest;
-use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Testing\TestResponse;
 
@@ -35,14 +33,11 @@ class ProductCreationTest extends TestCase
      * 
      * @return void 
      */
-    public function test_creation_product_response201() : void 
+    public function test_creation_product_response201(): void 
     {
-
         $data = $this->getFakeData();
-
         $response = $this->sendPostRequest($data); 
         $response->assertStatus(201);
-  
     }
 
     /**
@@ -53,11 +48,10 @@ class ProductCreationTest extends TestCase
      * @return void
      */
 
-    public function test_creation_product_database_successfully() : void 
+    public function test_creation_product_database_successfully(): void 
     { 
 
         $data = $this->getFakeData();
-
         $response = $this->sendPostRequest($data);
         $this->assertDatabaseHas('products' ,
                                 ['name' => $data['name'], 
@@ -77,7 +71,7 @@ class ProductCreationTest extends TestCase
      * 
      * @return void
      */
-    public function test_validation_failed_existence_product_database()
+    public function test_validation_failed_existence_product_database(): void
     {
 
         $data = $this->getFakeData();
@@ -86,7 +80,7 @@ class ProductCreationTest extends TestCase
 
         $data['name'] = $product->name;
 
-        $response = $this->sendPostRequest($data);
+        $this->sendPostRequest($data);
 
         $this->assertDatabaseMissing('products' ,
                                 [
@@ -106,9 +100,8 @@ class ProductCreationTest extends TestCase
      * 
      * @return void
      */
-    public function test_failed_creation_product_response400() : void 
+    public function test_failed_creation_product_response400(): void 
     {
-
         $data = $this->getFakeData();
 
         $data['category'] = $this->faker->name;
@@ -116,7 +109,6 @@ class ProductCreationTest extends TestCase
         $response = $this->sendPostRequest($data);
 
         $response->assertStatus(400);
-        
     }
     
     /**
@@ -126,7 +118,7 @@ class ProductCreationTest extends TestCase
      * 
      * @return void
      */
-    public function test_successful_upload_image() : void 
+    public function test_successful_upload_image(): void 
     {
         Storage::fake('/public/images');
         $data = $this->getFakeData();
@@ -154,13 +146,12 @@ class ProductCreationTest extends TestCase
 
         return
         [
-            "image" => File::create($imageName,2000),
-            "name" => $this->faker->name,
-            "description" => $this->faker->paragraph,
-            "price" => $this->faker->randomFloat(2,10,200),
-            "category" => Category::find($id)->name,
+            "image"         => File::create($imageName,2000),
+            "name"          => $this->faker->name,
+            "description"   => $this->faker->paragraph,
+            "price"         => $this->faker->randomFloat(2,10,200),
+            "category"      => Category::find($id)->name,
         ];
-       
     }
 
     /**
@@ -168,20 +159,17 @@ class ProductCreationTest extends TestCase
      * 
      * @return Illuminate\Testing\TestResponse 
      */
-    private function sendPostRequest(array $data) :TestResponse
+    private function sendPostRequest(array $data): TestResponse
     {
         $response = $this->json('POST','/products',
         [
-            "name" => $data['name'],
-            "description" => $data['description'],
-            "price" => $data['price'],
-            "image" => $data['image'],
-            "category" => $data['category']
+            "name"          => $data['name'],
+            "description"   => $data['description'],
+            "price"         => $data['price'],
+            "image"         => $data['image'],
+            "category"      => $data['category']
         ]);
         return $response;
     }
-
-
-
-  
+ 
 }
