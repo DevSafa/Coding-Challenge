@@ -26,5 +26,12 @@ class CategoryRepository implements CategoryRepositoryInterface {
 	{
 		return Category::find($id)->parent()->get();
 	}
+
+    public function getProducts(int $id) : EloquentCollection
+    {
+		$products = Category::find($id)->products()->get();
+        return $products;
+
+    }
 }
 

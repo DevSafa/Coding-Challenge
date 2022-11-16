@@ -55,5 +55,12 @@ class CategoryService implements CategoryServiceInterface {
 		return $categories;
 	}
 
+	public function getProducts(int $id) : array
+    {
+		return $this->categoryRepository->getProducts($id)->toArray();
+
+
+    }
+
 
 }

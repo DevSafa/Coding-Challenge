@@ -32,4 +32,11 @@ class CategoryController extends Controller
 	{
 		return $this->categoryService->index();
 	}
+
+	public function getProducts(int $id) : array
+    {
+		return $this->categoryService->getProducts($id);
+    }
 }
+
+
