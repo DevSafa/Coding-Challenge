@@ -11,101 +11,101 @@ class CategorySeeder extends Seeder
      *
      * @return void
      */
-    public function run() : void
+    public function run(): void
     {
         // inserting data using query builder
 
         DB::table('categories')->insert([
             [
-                'name' => 'Cosmetics',
+                'name'      => 'Cosmetics',
                 'parent_id' => NULL,
             ],
             [
-                'name' => 'MakeUp',
+                'name'      => 'MakeUp',
                 'parent_id' => 1,
             ],
             [
-                'name' => 'Perfum',
+                'name'      => 'Perfum',
                 'parent_id' => 1,
             ],
             [
-                'name' => 'SkinCare',
+                'name'      => 'SkinCare',
                 'parent_id' => 1,
             ],
             [
-                'name' => 'Eyelash',
+                'name'      => 'Eyelash',
                 'parent_id' => 2,
             ],
             [
-                'name' => 'Concealer',
+                'name'      => 'Concealer',
                 'parent_id' => 2,
             ],
             [
-                'name' => 'EyeBrow',
+                'name'      => 'EyeBrow',
                 'parent_id' => 2,
             ],
             [
-                'name' => 'Mascara',
+                'name'      => 'Mascara',
                 'parent_id' => 2,
             ],
             [
-                'name' => 'Curling',
+                'name'      => 'Curling',
                 'parent_id' => 8,
             ],
             [
-                'name' => 'Lash',
+                'name'      => 'Lash',
                 'parent_id' => 8,
             ],
             [
-                'name' => 'Non-Clumbing',
+                'name'      => 'Non-Clumbing',
                 'parent_id' => 8,
             ],
             [
-                'name' => 'Mink',
+                'name'      => 'Mink',
                 'parent_id' => 5,
             ],
             [
-                'name' => 'Sable',
+                'name'      => 'Sable',
                 'parent_id' => 5,
             ],
             [
-                'name' => 'eau de parfum',
+                'name'      => 'eau de parfum',
                 'parent_id' => 3,
             ],
             [
-                'name' => 'eau de toilette',
+                'name'      => 'eau de toilette',
                 'parent_id' => 3,
             ],
             [
-                'name' => 'eau de cologne',
+                'name'      => 'eau de cologne',
                 'parent_id' => 3,
             ],
             [
-                'name' => 'mini Mink',
+                'name'      => 'mini Mink',
                 'parent_id' => 12,
             ],
             [
-                'name' => 'natural Mink',
+                'name'      => 'natural Mink',
                 'parent_id' => 12,
             ],
             [
-                'name' => 'Clothes',
+                'name'      => 'Clothes',
                 'parent_id' => NULL,
             ],
             [
-                'name' => 'Casual',
+                'name'      => 'Casual',
                 'parent_id' => 19,
             ],
             [
-                'name' => 'Formal',
+                'name'      => 'Formal',
                 'parent_id' => 19,
             ],
             [
-                'name' => 'T-shirt',
+                'name'      => 'T-shirt',
                 'parent_id' => 20,
             ],
             [
-                'name' => 'Tink-jeans',
+                'name'      => 'Tink-jeans',
                 'parent_id' => 20,
             ],
         ]);

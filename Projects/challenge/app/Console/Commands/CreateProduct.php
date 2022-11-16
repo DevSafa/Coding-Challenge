@@ -105,7 +105,9 @@ class CreateProduct extends Command
      * @return void
      */
     protected function askAndvalidateInput(): void 
-    {
+    {            
+        $this->line("<fg=yellow>Product creation will take some time...</>");
+
         $data = $this->ask('Product\'s name');
         $this->validate("name", $data, ['required','string','unique:products']);
       
@@ -147,11 +149,10 @@ class CreateProduct extends Command
             $categories = $this->cliService->getCategoryService()
                                            ->getCategories($this->validData['category']);
 
-            $product = $this->cliService->getProductService()
+            $this->cliService->getProductService()
                                         ->storeProduct(
                                             $this->validData->put('categories',$categories)
                                         );
-            $this->line("<bg=green>Product created successfully ".$product."</>");
         }
     }
 }
