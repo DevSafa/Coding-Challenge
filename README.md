@@ -41,14 +41,16 @@ sh script.sh
 
 # Run
 ```bash
-#to run tests :  product creation using endpoint |  command line interface
+#to run tests : (endpoint - command line interface)
 
 docker-compose exec laravel-app ./vendor/bin/phpunit
 
 #to create product from command line interface
 #image url is a valid link to an image in the internet and it will be uploaded through command line
+#url example 
+  https://png.pngtree.com/png-clipart/20190116/ourmid/pngtree-new-years-little-things-illustration-beautiful-new-clothes-red-new-clothes-png-image_402812.jpg
 
-docker-compose exec laravel-app product:create  
+docker-compose exec laravel-app php artisan product:create  
 ```
 
 # browser
@@ -71,5 +73,8 @@ docker-compose exec laravel-app product:create
     127.0.0.1:8000/products
   
     #show products of a specific category
-    127.0.0.1/category/products/{id}
+    127.0.0.1:8000/category/products/{id}
+    
+    #create a product 
+    127.0.0.1:8000/products
 ```
