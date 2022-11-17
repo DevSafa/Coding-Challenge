@@ -28,30 +28,12 @@ export default {
     
 		}   
     },
-
-    props: {
-        id: {
-            type: Number,
-			required: true
-        },
-        name: {
-            type: String,
-            required: true
-        },
-        space: {
-            type: Number,
-            required: true
-        },
-        data: {
-            type: Array,
-			required: true
-        },
-    },
+    props: ['id','name','space','data'],
 
     methods: {
-        changeFromChild($id, $n) 
+        changeFromChild($id, $name) 
 		{
-            this.$emit('callChange', $id,$n);
+            this.$emit('callChange', $id,$name);
         },
         showCategory() 
 		{
@@ -62,26 +44,22 @@ export default {
 }
 </script>
 
-
-
-
 <style lang="scss" scoped>
 .name :focus{
         background-color:rgb(211, 174, 174) 
     }
 .category-item {
     position: relative;
-
-    .name {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        white-space: nowrap;
-        user-select: none;
-        height: 50px;
-        padding: 0 20px;
-        box-sizing: border-box;
-    }
+.name {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	white-space: nowrap;
+	user-select: none;
+	height: 50px;
+	padding: 0 20px;
+	box-sizing: border-box;
+}
 }
 </style>

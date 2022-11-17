@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<div class="categories">
-			<h1>Categories</h1>
+			<h6>categories</h6>
 			<categoryItemComponent v-for="(item, index) in categoryTree" 
 							:key   = "index" 
 							:name  = "item.name" 
@@ -11,9 +11,7 @@
 							v-on:callChange="changeFromChild" />
 		</div>
 		<div class="Products">
-			
-			<h1>Products</h1>
-			<h5 >{{ this.category_name }}</h5>
+			<h5 >{{ this.categoryName }}</h5>
 			<div class="custom-control custom-checkbox" v-show="this.products.length != 0" >
 				<input type="checkbox" class="custom-control-input" v-on:change="sortByPrice($event)">
 				<label class="custom-control-label" for="customCheck1">sort By Price</label>
@@ -21,10 +19,9 @@
 			<div>
 				<productComponent 	:products	 = this.products
 									:creation	 = "this.create"
-									:id			 = "this.id"
-									:categoryName = "this.category_name"/>
+									:categoryName = "this.categoryName"/>
 			</div>
-		</div>
+		</div>	
 	</div>
 </template>
 
@@ -34,26 +31,23 @@ import axios from 'axios';
 import categoryItemComponent from './CategoryItemComponent.vue'
 import productComponent from './ProductComponent.vue'
 
-
-	export default {
-	name: "categories",
+export default {
+		name: "categories",
 	data() {
 		return {
 			categoryTree: [],
 			products: [],
 			temp : [],
 			create : false,
-			category_name : 'All Products'
+			categoryName : 'All Products'
 
 		}
 	},
 	created() {
 		this.fetchData();
-		this.id = 0;
 	},
-	
-	methods: {
 
+	methods: {
 		fetchData() 
 		{
 			axios.get("/categories")
@@ -73,8 +67,8 @@ import productComponent from './ProductComponent.vue'
 			if($event.target.checked)
 			{
 				this.products = this.products.slice().sort(function(a, b) {
-        				return a.price - b.price;
-      			});
+						return a.price - b.price;
+				});
 			}
 			else 
 				this.products = this.temp;
@@ -83,16 +77,15 @@ import productComponent from './ProductComponent.vue'
 
 		changeFromChild(id,name) 
 		{
-			this.category_name = name;
+			this.categoryName = name;
 			axios.get(`/category/products/${id}`)
 				.then(res => {
 					this.create = true;
-					this.id  = id;
 					this.products = res.data;
 					this.temp = this.products
 				})
 		},
-    },
+	},
 
 	components: 
 	{
@@ -105,8 +98,22 @@ import productComponent from './ProductComponent.vue'
 
 <style lang="scss" scoped>
 h5 {
-	color:rgb(211, 174, 174) 
+	color:rgb(211, 174, 174) ;
 }
 
+h3 {
+	color:rgb(170, 78, 78) ;
+}
+.container {
+    border: 3px solid #fff;
+    padding: 20px;
+	float: left;
+}
+.categories{
+    float: left;
+}  
+.Products {
+    float: left;
+}
 </style>
 

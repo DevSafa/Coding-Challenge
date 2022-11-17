@@ -6,6 +6,8 @@
 				<form @submit.prevent="processForm" class="create-form">
 
 					<h5 class="title">Create Product</h5>
+					<h5 class="title1">{{this.categoryName}}</h5>
+
 					<div>
 						<input type="text" class="form-control rounded border-white mb-3 form-input"
 							placeholder="Product name" required v-model="name">
@@ -26,6 +28,9 @@
 					</div>
 					<div v-if="errors" v-for="errorArray in errors">
 						<span class="text-danger">{{ errorArray[0] }} </span>
+					</div>
+					<div v-if="success">
+						<span class="text-success">Product created</span>
 					</div>
 					<div class="submit-button-wrapper">
 						<input type="submit" value="Create">
@@ -52,6 +57,7 @@ export default {
 			price: '',
 			image: null,
 			errors: '',
+			success : false
 
 		}
 	},
@@ -73,12 +79,14 @@ export default {
 
 			axios.post('/products', formData)
 			.then(res => {
+				this.errors =[];
+				this.success = true;
 				console.log(res.data);
 			}).catch(error => {
+				this.success = false;
 				this.errors = error.response.data;
 			})
 			this.showPopUp  = this.showPopUp;
-			this.$emit('show');
 		}
 	}
 }
@@ -87,6 +95,7 @@ export default {
 
 
 <style scoped>
+
 .bloc-modale {
 	position: fixed;
 	top: 0;
@@ -163,10 +172,17 @@ export default {
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.07), 0 0 8px #f33fb0;
 }
 
-.create-form .title {
+.create-form .title  {
 	text-align: center;
 	font-size: 24px;
 	font-weight: 500;
+	color: #d30069;
+}
+.create-form .title1  {
+	text-align: center;
+	font-size: 24px;
+	font-weight: 500;
+	color: rgb(211, 174, 174) ;
 }
 
 .create-form .description {
@@ -196,4 +212,3 @@ export default {
 </style>
 
 
-//https://blog.quickadminpanel.com/laravel-api-how-to-upload-file-from-vue-js/
