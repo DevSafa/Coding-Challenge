@@ -49,6 +49,9 @@ docker-compose exec laravel-app ./vendor/bin/phpunit
 #image url is a valid link to an image in the internet and it will be uploaded through command line
 #url example 
   https://png.pngtree.com/png-clipart/20190116/ourmid/pngtree-new-years-little-things-illustration-beautiful-new-clothes-red-new-clothes-png-image_402812.jpg
+#the category must be one of categories name in database (visit 127.0.0.1:8081 to see the database)
+#categories example
+   Clothes - MakeUp 
 
 docker-compose exec laravel-app php artisan product:create  
 ```
