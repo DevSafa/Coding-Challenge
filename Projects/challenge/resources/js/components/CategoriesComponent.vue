@@ -11,7 +11,7 @@
 							v-on:callChange="changeFromChild" />
 		</div>
 		<div class="Products">
-			<h5 >{{ this.categoryName }}</h5>
+			<h5 ><span>Products  :</span> {{ this.categoryName }}</h5>
 			<div class="custom-control custom-checkbox" v-show="this.products.length != 0" >
 				<input type="checkbox" class="custom-control-input" v-on:change="sortByPrice($event)">
 				<label class="custom-control-label" for="customCheck1">sort By Price</label>
@@ -100,20 +100,21 @@ export default {
 h5 {
 	color:rgb(211, 174, 174) ;
 }
+span {
+	color:rgb(170, 78, 78) ;
 
-h3 {
+}
+h6 {
 	color:rgb(170, 78, 78) ;
 }
-.container {
-    border: 3px solid #fff;
-    padding: 20px;
-	float: left;
-}
+
 .categories{
     float: left;
+	width : 30%;
 }  
 .Products {
     float: left;
+	width : 70%;
 }
 </style>
 

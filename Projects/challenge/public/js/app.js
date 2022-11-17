@@ -2292,7 +2292,7 @@ var render = function render() {
     });
   })], 2), _vm._v(" "), _c("div", {
     staticClass: "Products"
-  }, [_c("h5", [_vm._v(_vm._s(this.categoryName))]), _vm._v(" "), _c("div", {
+  }, [_c("h5", [_c("span", [_vm._v("Products  :")]), _vm._v(" " + _vm._s(this.categoryName))]), _vm._v(" "), _c("div", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -2672,7 +2672,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "h5[data-v-033a6ba6] {\n  color: rgb(211, 174, 174);\n}\nh3[data-v-033a6ba6] {\n  color: rgb(170, 78, 78);\n}\n.container[data-v-033a6ba6] {\n  border: 3px solid #fff;\n  padding: 20px;\n  float: left;\n}\n.categories[data-v-033a6ba6] {\n  float: left;\n}\n.Products[data-v-033a6ba6] {\n  float: left;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "h5[data-v-033a6ba6] {\n  color: rgb(211, 174, 174);\n}\nspan[data-v-033a6ba6] {\n  color: rgb(170, 78, 78);\n}\nh6[data-v-033a6ba6] {\n  color: rgb(170, 78, 78);\n}\n.categories[data-v-033a6ba6] {\n  float: left;\n  width: 30%;\n}\n.Products[data-v-033a6ba6] {\n  float: left;\n  width: 70%;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
