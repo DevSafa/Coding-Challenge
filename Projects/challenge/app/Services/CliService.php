@@ -90,7 +90,9 @@ class CliService implements CliServiceInterface
     public function getFile(string $url): File
     {
         $fileContent = @file_get_contents($url);
-        
+         if ($fileContent === false) {
+            return null;
+        }
         $tempFilePath = stream_get_meta_data($this->tempFile)['uri'];
         
         file_put_contents($tempFilePath, $fileContent);
