@@ -189,7 +189,7 @@ class ProductCreationTest extends TestCase
         $this->seed(CategorySeeder::class);
         $count = Category::count();
         $id = $this->faker->numberBetween(0,$count - 1);
-        $imageName = $this->faker->name() .'.png';
+        $imageName = $this->faker->name .'.png';
 
         return
         [
