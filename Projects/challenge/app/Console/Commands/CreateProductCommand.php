@@ -101,20 +101,24 @@ class CreateProductCommand extends Command
         }
         else {
 
+      
             $image = $this->cliService->getFile($validData['url']);
+            if ($image === null)
+                $this->line("<fg=red>Failed to create Product</>");
+            else {
+                $file = $this->cliService->getUploadFile($image, $validData['name']);
+                $validData->put("image",$file);
 
-            $file = $this->cliService->getUploadFile($image, $validData['name']);
-            $validData->put("image",$file);
+                $validData->forget('url');
+                $categories = $this->cliService->getCategoryService()
+                                            ->getCategories($validData['category']);
 
-            $validData->forget('url');
-            $categories = $this->cliService->getCategoryService()
-                                           ->getCategories($validData['category']);
-
-            $this->cliService->getProductService()
-                                        ->storeProduct(
-                                            $validData->put('categories',$categories)
-                                        );
-            $this->line("<fg=green>Product created</>");
+                $this->cliService->getProductService()
+                                            ->storeProduct(
+                                                $validData->put('categories',$categories)
+                                            );
+                $this->line("<fg=green>Product created</>");
+            }
         }
     }
 }
