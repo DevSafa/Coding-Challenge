@@ -51,8 +51,8 @@ class CreateProductCommand extends Command
      */
     protected function displayErrors(Collection $errors): void
     {
-        for ($i = 0 ; $i < count($errors) ; $i++) {
-            $this->line("<bg=red>".$errors[$i]."</>");
+        foreach ($errors as $error) {
+            $this->line("<bg=red>".$error."</>");
         }
     }
 

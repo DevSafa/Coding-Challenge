@@ -77,8 +77,8 @@ class CliValidation
      */
     public function addError(array $errors): void
     {
-        for ($i = 0 ; $i < count($errors) ; $i++) {
-            $this->errors->push($errors[$i]);
+        foreach ($errors as $error) {
+            $this->errors->push($error);
         }
     }
 
