@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,13 +10,16 @@ class Product extends Model
 {
     /**
      * Get a new factory instance for the model.
+     *
      * @param  mixed  $parameters
+     *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
     use HasFactory;
 
     /**
      * The attributes that are mass assignable.
+     *
      * @var array
      */
     protected $fillable = [
@@ -27,9 +31,11 @@ class Product extends Model
 
     /**
      * The attributes that should be visible in arrays.
+     *
      * @var array
      */
     protected $visible = [
+        'id',
         'name',
         'description',
         'price',
@@ -38,7 +44,8 @@ class Product extends Model
 
     /**
      * get The categories that belong to a product.
-     * BelongsToMany
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany;
      */
     public function categories(): BelongsToMany
     {

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +12,9 @@ class Category extends Model
 {
     /**
      * Get a new factory instance for the model.
+     *
      * @param  mixed  $parameters
+     *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
     use HasFactory;
@@ -23,6 +26,7 @@ class Category extends Model
 
     /**
      * The attributes that should be visible in arrays
+     *
      * @var array
      */
     protected $visible = [
@@ -32,8 +36,9 @@ class Category extends Model
     ];
 
     /**
-     * get The products that belong to a category. 
-     * @return BelongsToMany
+     * get The products that belong to a category.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsToMany;
      */
     public function products(): BelongsToMany
     {
@@ -42,7 +47,8 @@ class Category extends Model
 
     /**
      * get the categories children of a category
-     * @return HasMany
+     *
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function children(): HasMany
     {
@@ -51,7 +57,8 @@ class Category extends Model
 
     /**
      * get category parent of a category
-     * @return BelongsTo
+     *
+     * @return Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parent(): BelongsTo
     {
