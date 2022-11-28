@@ -1,37 +1,32 @@
 <?php
+
 namespace App\Repositories;
 
-use App\Interfaces\ProductRepositoryInterface;
+use App\Interfaces\Repositories\ProductRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use Illuminate\Support\Collection as SupportCollection;
 
-class ProductRepository implements ProductRepositoryInterface 
+class ProductRepository implements ProductRepositoryInterface
 {
     /**
-     * get all products  from database 
-     * @return EloquentCollection
+     * get all Products from products table
+     *
+     * @return Illuminate\Database\Eloquent\Collection
      */
-    public function index(): EloquentCollection
+    public function all(): Collection
     {
         return Product::get();
     }
 
     /**
-     * store product in database .
-     * attach categories to product  using eloquent relation.
-     * 
-     * @param SupportCollection  $values
-     * @param array  $categories
-     * @return array 
+     * store a product in products table
+     *
+     * @param   array   $values
+     *
+     * @return  App\Models\Product
      */
-	public function storeProduct(
-        SupportCollection $values, 
-        array $categories
-    ): array
+    public function store(array $values): Product
     {
-            $product = Product::create($values->toArray());
-            $product->categories()->sync($categories);
-            return $product->toArray();
+        return Product::create($values);
     }
 }

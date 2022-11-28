@@ -1,49 +1,56 @@
 <?php
+
 namespace App\Repositories;
 
-use App\Interfaces\CategoryRepositoryInterface;
+use App\Interfaces\Repositories\CategoryRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 use App\Models\Category;
-use Illuminate\Database\Eloquent\Collection AS EloquentCollection;
 
-class CategoryRepository implements CategoryRepositoryInterface 
+class CategoryRepository implements CategoryRepositoryInterface
 {
     /**
-     * get all parent categories  from database  and their children categories
-     *  @return EloquentCollection
+     * get all categories from categories table
+     *
+     * @return  Illuminate\Database\Eloquent\Collection
      */
-    public function index(): EloquentCollection
+    public function all(): Collection
     {
         return Category::whereNull('parent_id')->get();
     }
 
     /**
-     * get category with specific name
-     * @param string $name
-     * @return int
+     * get products of a specific category
+     *
+     * @param int $id
+     *
+     * @return  Illuminate\Database\Eloquent\Collection
      */
-    public function getCategoryId(string $name): int
+    public function filter(int $id): Collection
     {
-        return Category::where('name',$name)->get()[0]['id'];
+        return Category::find($id)->products()->get();
     }
 
     /**
      * get parent of a category
+     *
      * @param int $id
-     * @return EloquentCollection
+     *
+     * @return Illuminate\Database\Eloquent\Collection
      */
-    public function getParent(int $id): EloquentCollection
+    public function getParent(int $id): Collection
     {
         return Category::find($id)->parent()->get();
     }
 
     /**
-     * get products of a category
-     * @param int $id
-     * @return EloquentCollection
+     * get category with specific name
+     *
+     * @param string $name
+     *
+     * @return App\Models\Category
      */
-    public function getProducts(int $id): EloquentCollection
+    public function getCategory(string $name): Category
     {
-        $products = Category::find($id)->products()->get();
-        return $products;
+        return Category::firstWhere('name', $name);
     }
 }
