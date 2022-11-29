@@ -1,42 +1,44 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Interfaces\CategoryServiceInterface;
+use App\Interfaces\Services\GetDataServiceInterface;
 
 class CategoryController extends Controller
 {
     /**
-     * The category service instance
-     * @var CategoryServiceInterface
-    */
-    protected $categoryService = null;
-
-    /**
-     * Create a new CategoryController instance
-     * @param  CategoryServiceInterface  $categoryService
-     * @return void
-    */
-    public function __construct(CategoryServiceInterface $categoryService)
-    {
-        $this->categoryService = $categoryService;
-    }
-
-    /**
-     * call the category service instance to get all categories
-     * @return  array
-    */
-    public function index(): array
-    {
-        return $this->categoryService->index();
-    }
-
-    /**
-     *call the category service instance to get products by category
-     * @param  int $id
-     * @return array
+     * @var App\Interfaces\Services\GetDataServiceInterface
      */
-    public function getProducts(int $id): array
+    protected $getDataService = null;
+
+    /**
+     * create a new Instance of CategoryController
+     */
+    public function __construct(GetDataServiceInterface $getDataService)
     {
-        return $this->categoryService->getProducts($id);
+        $this->getDataService = $getDataService;
+    }
+    /**
+     * get all categories
+     *
+     * @return void
+     */
+    public function index()
+    {
+        $categories =  $this->getDataService->getCategories();
+        return $categories;
+    }
+
+    /**
+     * get products of a specific category
+     *
+     * @param int $id
+     *
+     * @return void
+     */
+    public function filter(int $id)
+    {
+        $products = $this->getDataService->getProductsByCategory($id);
+        return $products;
     }
 }

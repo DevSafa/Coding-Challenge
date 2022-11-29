@@ -1,67 +1,80 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateProductRequest;
-use App\Interfaces\ProductServiceInterface;
-use App\Interfaces\CategoryServiceInterface;
-use Symfony\Component\HttpFoundation\Response;
+use App\Interfaces\Services\GetDataServiceInterface;
+use App\Interfaces\Services\ProductCreationServiceInterface;
+use App\Validators\ProductCreationValidator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Request;
+use Illuminate\Support\ViewErrorBag;
+use Illuminate\Validation\ValidationException;
+use PhpParser\ErrorHandler\Throwing;
+use Throwable;
 
 class ProductController extends Controller
 {
     /**
-     * The product service instance
-     * @var ProductServiceInterface
-    */
-    protected $productService = null;
+     * @var App\Interfaces\Services\GetDataServiceInterface
+     */
+    protected $getDataService = null;
 
     /**
-     * The category service instance
-     * @var CategoryServiceInterface
-    */
-    protected $categoryService = null;
+     * @var App\Interfaces\Services\GetDataServiceInterface
+     */
+    protected $productCreationService = null;
 
     /**
-     * Create a new ProductController instance
-     * @param  ProductServiceInterface  $productService
-     * @param  CategoryServiceInterface $categoryService
-     * @return void
-    */
+     * create a new Instance of ProductController
+     */
     public function __construct(
-        ProductServiceInterface $productService, 
-        CategoryServiceInterface $categoryService
+        GetDataServiceInterface $getDataService,
+        ProductCreationServiceInterface $productCreationService
     ) {
-        $this->productService = $productService;
-        $this->categoryService = $categoryService;
+        $this->getDataService = $getDataService;
+        $this->productCreationService = $productCreationService;
     }
 
     /**
-     * Call the product ervice  instance to get all products
-     * @return  array
-    */
-    public function index(): array
+     * get all products
+     *
+     * @return void
+     */
+    public function index()
     {
-        return $this->productService->index();
+        $products = $this->getDataService->getProducts();
+        return $products;
     }
 
     /**
-     * validate data using CreateProductRequest
-     * prepare data for product, category  services using CreateProductRequest
-     * @param CreateProductRequest  $request
-     * @return  void
-    */
-    public function store(CreateProductRequest $request): Response
+     * store a product
+     *
+     * @param Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    public function store(Request $request)
     {
-        $dataForCategoryService = $request->getDataForCategoryService();
-        $dataForProductService = $request->getDataForProductService();
-        
-        $categories = $this->categoryService->getCategories(
-            $dataForCategoryService
-        );
-        $product = $this->productService->storeProduct(
-            $dataForProductService->put('categories', $categories)
-        );
-        
-        return response($product , 201)
+        $values = $request->all();
+        try {
+            $this->productCreationService->validateData($values, false);
+            $product = $this->productCreationService->storeProduct($values);
+        } catch(Throwable $e) {
+            if ($e instanceof ValidationException) {
+                throw new HttpResponseException(
+                    response()->json([
+                        'messages' => $e->errors()
+                    ], 400)
+                );
+            } else {
+                throw new HttpResponseException(
+                    response()->json([
+                        'messages' => array(["Server Error"])
+                    ], 500)
+                );
+            }
+        }
+        return response($product, 201)
             ->header('Content-Type', 'application/json');
     }
 }
