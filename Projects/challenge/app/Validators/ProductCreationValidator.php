@@ -81,7 +81,8 @@ class ProductCreationValidator
     public function messages(): array
     {
         return [
-            "category.exists" => "category name doesn't exist"
+            "category.exists"   => "category name doesn't exist",
+            "image.image"       => "invalid image"
         ];
     }
 

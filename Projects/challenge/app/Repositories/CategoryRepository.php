@@ -53,4 +53,14 @@ class CategoryRepository implements CategoryRepositoryInterface
     {
         return Category::firstWhere('name', $name);
     }
+
+    /**
+     * get collection of ids
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function getCategoriesIds(): Collection
+    {
+        return Category::select('id')->get();
+    }
 }
