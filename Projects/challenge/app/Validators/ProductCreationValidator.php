@@ -3,6 +3,7 @@
 namespace App\Validators;
 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\MessageBag;
 
 class ProductCreationValidator
 {
@@ -99,7 +100,7 @@ class ProductCreationValidator
      *
      * @return array
      */
-    public function errors(): array
+    public function errors(): MessageBag
     {
         return $this->validator->errors();
     }
