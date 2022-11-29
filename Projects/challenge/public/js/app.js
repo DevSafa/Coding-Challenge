@@ -2108,7 +2108,7 @@ __webpack_require__.r(__webpack_exports__);
     changeFromChild: function changeFromChild(id, name) {
       var _this2 = this;
       this.categoryName = name;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/category/products/".concat(id)).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/filter/".concat(id)).then(function (res) {
         _this2.create = true;
         _this2.products = res.data;
         _this2.temp = _this2.products;
@@ -2195,14 +2195,13 @@ __webpack_require__.r(__webpack_exports__);
       formData.append("description", this.description);
       formData.append("price", this.price);
       formData.append("category", this.categoryName);
-      console.log(formData.image);
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/products', formData).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/create', formData).then(function (res) {
         _this.errors = [];
         _this.success = true;
         console.log(res.data);
       })["catch"](function (error) {
         _this.success = false;
-        _this.errors = error.response.data;
+        _this.errors = error.response.data.messages;
       });
       this.showPopUp = this.showPopUp;
     }
