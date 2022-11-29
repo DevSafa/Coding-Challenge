@@ -78,7 +78,7 @@ export default {
 		changeFromChild(id,name) 
 		{
 			this.categoryName = name;
-			axios.get(`/category/products/${id}`)
+			axios.get(`/filter/${id}`)
 				.then(res => {
 					this.create = true;
 					this.products = res.data;

@@ -22,9 +22,8 @@
 							placeholder="Description" required v-model="description"></textarea>
 					</div>
 					<div>
-
 						<input class="form-control rounded border-white mb-3" type="file" ref="file"
-							v-on:change="handleFileUpload">
+							 v-on:change="handleFileUpload">
 					</div>
 					<div v-if="errors" v-for="errorArray in errors">
 						<span class="text-danger">{{ errorArray[0] }} </span>
@@ -75,16 +74,15 @@ export default {
 			formData.append("description", this.description);
 			formData.append("price", this.price);
 			formData.append("category", this.categoryName);
-			console.log(formData.image);
 
-			axios.post('/products', formData)
+			axios.post('/create', formData)
 			.then(res => {
 				this.errors =[];
 				this.success = true;
 				console.log(res.data);
 			}).catch(error => {
 				this.success = false;
-				this.errors = error.response.data;
+				this.errors = error.response.data.messages;
 			})
 			this.showPopUp  = this.showPopUp;
 		}
