@@ -2,11 +2,12 @@
 
 namespace App\Services;
 
-use App\Exceptions\InvalidContentImage;
+use App\Exceptions\InvalidContentImageException;
 use App\Interfaces\Services\ProductCreationServiceInterface;
 use App\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Interfaces\Repositories\ProductRepositoryInterface;
 use App\Interfaces\Repositories\CategoryProductRepositoryInterface;
+use App\Models\Category;
 use App\Models\Product;
 use App\Validators\ProductCreationValidator;
 use Illuminate\Http\File;
@@ -58,38 +59,27 @@ class ProductCreationService implements ProductCreationServiceInterface
     }
 
     /**
-     * store the product
-     * store uploaded image
-     * store product with categories
+     * validate input using ProductCreationValidator
+     * throws validation exception in case of errros
      *
      * @param array $values
+     * @param bool  $cli
+     *
+     * @return void
      */
-    public function storeProduct(array $values): Product
+    public function validateData(array $values, bool $cli): bool
     {
-        $data = [
-            'name'          => $values['name'],
-            'description'   => $values['description'],
-            'price'         => (float)$values['price'],
-            'image'         => $this->generateImageName(
-                $values['image'],
-                $values['name']
-            ),
-        ];
-
-        $product = $this->productRepository->store($data);
-        $this->uploadImage($values['image'], $data['image']);
-        $categories = $this->getProductCategories($values['category']);
-        $this->storeProductCategories($categories, $product['id']);
-
-        return $product;
+        $this->myValidator = new ProductCreationValidator($values, $cli);
+        if ($this->myValidator->check()) {
+            throw (new ValidationException($this->myValidator));
+        }
+        return true;
     }
 
-
     /**
-     * generate a unique image name
      *
-     * @param Illuminate\Http\UploadedFile $image
-     * @param string $name
+     * @param Illuminate\Http\UploadedFile  $image
+     * @param string                        $name
      *
      * @return  string
     */
@@ -102,14 +92,54 @@ class ProductCreationService implements ProductCreationServiceInterface
     }
 
     /**
+     * @param array $values
+     *
+     * @return array
+     */
+    protected function prepareDataForProductRepo(array $values): array
+    {
+        return [
+            'name'          => $values['name'],
+            'description'   => $values['description'],
+            'price'         => (float)$values['price'],
+            'category'      => $values['category'],
+            'image'         => $this->generateImageName(
+                $values['image'],
+                $values['name']
+            ),
+        ];
+    }
+
+    /**
+     * @param array $categories
+     * @param int    $id
+     *
+     * @return array
+     */
+    protected function prepareDataForCategoryProductRepo(
+        array $categories,
+        int $id
+    ): array {
+        $data = array();
+
+        foreach ($categories as $category) {
+            array_push($data, [
+                "product_id" => $id,
+                "category_id"=>$category,
+            ]);
+        }
+        return $data;
+    }
+
+    /**
      * store the image
      *
-     * @param Illuminate\Http\UploadedFile $image
-     * @param string $imageName
+     * @param Illuminate\Http\UploadedFile  $image
+     * @param string                        $imageName
      *
      * @return void
     */
-    protected function uploadImage(
+    protected function storeImage(
         UploadedFile $image,
         string $imageName
     ): void {
@@ -117,68 +147,67 @@ class ProductCreationService implements ProductCreationServiceInterface
     }
 
     /**
-     * get categories parents of a single category
-     * using categoryRepository
+     * get all parents of a category
      *
-     * @param string $name
-     *
-     * @return array
-     */
-    protected function getProductCategories(string $name): array
-    {
-        $id = $this->categoryRepository->getCategory($name)['id'];
-
-        $categories = array();
-
-        array_push($categories, $id);
-
-        $parent = $this->categoryRepository->getParent($id);
-
-        while ($parent->isNotEmpty()) {
-            $parentId= $parent[0]['id'];
-            array_push($categories, $parentId);
-            $parent = $this->categoryRepository->getParent($parentId);
-        }
-
-        return $categories;
-    }
-
-    /**
-     * associate product with categories using
-     * categoryProductRepository
-     *
-     * @param array $categories
-     * @param int   $id
+     * @param App\Models\Category
      *
      * @return array
      */
-    protected function storeProductCategories(array $categories, int $id): void
+    public function getCategoriesIds(Category $parent): array
     {
-        $data = collect();
-        foreach ($categories as $category) {
-            $data->push([
-                "product_id" => $id,
-                "category_id"=>$category,
-            ]);
+        $ids = collect();
+        $ids = $ids->merge($parent['id']);
+        if ($parent['parent']) {
+            $ids = $ids->merge($this->getCategoriesIds($parent['parent']));
         }
-        $this->categoryProductRepository->store($data->toArray());
+        return $ids->toArray();
     }
 
     /**
-     * validate input using ProductCreationValidator
-     * throws validation exception in case of errros
-     *
      * @param array $values
-     * @param bool  $cli
+     *
+     * @return Product
+     */
+    public function toProductRepository(array $values): Product
+    {
+        $data = $this->prepareDataForProductRepo($values);
+
+        $product = $this->productRepository->store($data);
+        return $product;
+    }
+
+    /**
+     * @param string $name
      *
      * @return void
      */
-    public function validateData(array $values, bool $cli): void
+    public function toCategoryProductRepository(
+        string $name
+    ): void {
+        $parent = $this->categoryRepository->getCategoryByName($name);
+
+        $categoriesIds = $this->getCategoriesIds($parent);
+
+        $data = $this->prepareDataForCategoryProductRepo(
+            $categoriesIds,
+            $parent['id']
+        );
+        $this->categoryProductRepository->store($data);
+    }
+
+     /**
+     * @param array $values
+     *
+     * @return Product
+     */
+    public function storeProduct(array $values): Product
     {
-        $this->myValidator = new ProductCreationValidator($values, $cli);
-        if ($this->myValidator->check()) {
-            throw (new ValidationException($this->myValidator));
-        }
+        $product = $this->toProductRepository($values);
+        $this->toCategoryProductRepository($values['category']);
+
+        $this->storeImage($values['image'], $product['image']);
+
+        return $product;
     }
 
     /**
@@ -192,13 +221,21 @@ class ProductCreationService implements ProductCreationServiceInterface
      */
     public function getFile(string $url): File
     {
-        $error = 0;
+        $fileContent = $this->readUrlContent($url);
+        $file = $this->putContentInFile($fileContent);
+        return $file;
+    }
 
-        $fileContent = file_get_contents($url);
-        if ($fileContent === false) {
-            $error = 1;
-        }
-
+    /**
+     * method for CLI
+     * get content of a file from url
+     *
+     * @param string $fileContent
+     *
+     * @return File
+     */
+    protected function putContentInFile(string $fileContent): File
+    {
         $this->tempFile = tmpFile();
         $tempFilePath = stream_get_meta_data($this->tempFile)['uri'];
 
@@ -206,12 +243,26 @@ class ProductCreationService implements ProductCreationServiceInterface
 
         $tempFileObject = new File($tempFilePath);
         if (!str_contains($tempFileObject->getMimeType(), 'image')) {
-            $error = 1;
-        }
-        if ($error) {
-            throw new InvalidContentImage("can't get content from url");
+            throw new InvalidContentImageException("content of url not valid");
         }
         return $tempFileObject;
+    }
+
+    /**
+     * method for CLI
+     * put content in File object
+     *
+     * @param string $url
+     *
+     * @return string
+     */
+    protected function readUrlContent(string $url): string
+    {
+        $fileContent = file_get_contents($url);
+        if ($fileContent === false) {
+            throw new InvalidContentImageException("content of url not valid");
+        }
+        return $fileContent;
     }
 
     /**
@@ -235,7 +286,7 @@ class ProductCreationService implements ProductCreationServiceInterface
         );
 
         if ($uploadedFile === null) {
-            throw new InvalidContentImage("can't uplaod image");
+            throw new InvalidContentImageException("can't uplaod image");
         }
 
         return $uploadedFile;
