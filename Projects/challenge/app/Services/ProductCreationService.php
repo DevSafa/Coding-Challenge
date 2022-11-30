@@ -153,7 +153,7 @@ class ProductCreationService implements ProductCreationServiceInterface
      *
      * @return array
      */
-    public function getCategoriesIds(Category $parent): array
+    protected function getCategoriesIds(Category $parent): array
     {
         $ids = collect();
         $ids = $ids->merge($parent['id']);
@@ -168,7 +168,7 @@ class ProductCreationService implements ProductCreationServiceInterface
      *
      * @return Product
      */
-    public function toProductRepository(array $values): Product
+    protected function toProductRepository(array $values): Product
     {
         $data = $this->prepareDataForProductRepo($values);
 
@@ -181,13 +181,13 @@ class ProductCreationService implements ProductCreationServiceInterface
      *
      * @return void
      */
-    public function toCategoryProductRepository(
+    protected function toCategoryProductRepository(
         string $name
     ): void {
         $parent = $this->categoryRepository->getCategoryByName($name);
 
         $categoriesIds = $this->getCategoriesIds($parent);
-
+        // dd($parent);
         $data = $this->prepareDataForCategoryProductRepo(
             $categoriesIds,
             $parent['id']
