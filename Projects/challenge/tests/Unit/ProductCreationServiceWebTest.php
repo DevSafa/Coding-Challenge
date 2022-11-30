@@ -94,27 +94,6 @@ class ProductCreationServiceWebTest extends TestCase
         Storage::assertExists('/public/images/'.$imageName);
     }
 
-    /**
-     * test getting array of ids
-     *
-     * @return void
-     */
-    public function test_parents_of_category(): void
-    {
-        $count = Category::count();
-        $id = $this->faker->numberBetween(1, $count);
-        $method = $this->reflection->getMethod('getCategoriesIds');
-        $method->setAccessible(true);
-
-        $result = $method->inVokeArgs(
-            $this->productCreationService,
-            [Category::find($id)]
-        );
-
-        $this->assertTrue(is_array($result));
-
-        $this->assertTrue(in_array($id, $result));
-    }
 
     /**
      * test generation of image name
@@ -162,33 +141,31 @@ class ProductCreationServiceWebTest extends TestCase
     }
 
     /**
-     * test prepared data for categoryProduct repository
+     * test prepared data for category product repository
      *
      * @return void
      */
     public function test_prepare_data_for_category_product_repository(): void
     {
-        $count = Category::count();
-        $id = $this->faker->numberBetween(1, $count);
-        $categories = $this->getCategories($id);
-
         $method = $this->reflection->getMethod(
             'prepareDataForCategoryProductRepo'
         );
         $method->setAccessible(true);
 
+        $productId = $this->faker->numberBetween(10, 30);
+        $parentId = $this->faker->numberBetween(1, 20);
+
         $result = $method->inVokeArgs(
             $this->productCreationService,
-            [$categories,$id]
+            [$productId,$parentId]
         );
-
-        foreach ($categories as $category) {
-            $this->assertContains([
-                "product_id" => $id,
-                "category_id" => $category
-            ], $result);
-        }
+        $this->assertContains(
+            ["product_id" => $productId,
+            "category_id" => $parentId],
+            $result
+        );
     }
+
 
     public function test_failed_validation()
     {
@@ -203,22 +180,7 @@ class ProductCreationServiceWebTest extends TestCase
             [$invalidData,false]
         );
     }
-    /**
-     * @param $id
-     *
-     * @return array
-     */
-    protected function getCategories(int $id): array
-    {
-        $method = $this->reflection->getMethod('getCategoriesIds');
-        $method->setAccessible(true);
 
-        $categories = $method->inVokeArgs(
-            $this->productCreationService,
-            [Category::find($id)]
-        );
-        return $categories;
-    }
     /**
      * get fake data
      *
