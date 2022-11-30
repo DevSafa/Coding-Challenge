@@ -16,7 +16,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Testing\File as TestingFile;
 use Illuminate\Http\UploadedFile;
 
-class CliProductCreationTest extends TestCase
+class ProductCreationServiceCliTest extends TestCase
 {
     /**
      * use RefreshDatabase trait
@@ -28,6 +28,9 @@ class CliProductCreationTest extends TestCase
      */
     use WithFaker;
 
+    /**
+     * @var ProductCreationService
+     */
     protected $productCreationService;
 
     /**

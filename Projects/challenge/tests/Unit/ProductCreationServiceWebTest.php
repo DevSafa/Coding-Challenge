@@ -10,15 +10,13 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\ProductRepository;
 use App\Services\ProductCreationService;
 use Database\Seeders\CategorySeeder;
-use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Testing\File as TestingFile;
-use Illuminate\Http\UploadedFile as HttpUploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use ReflectionClass;
 
-class WebProductCreationTest extends TestCase
+class ProductCreationServiceWebTest extends TestCase
 {
     /**
      * use RefreshDatabase trait
