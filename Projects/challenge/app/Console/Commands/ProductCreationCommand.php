@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Exceptions\InvalidContentImage;
+use App\Exceptions\InvalidContentImageException;
 use App\Interfaces\Services\ProductCreationServiceInterface;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
@@ -154,11 +155,10 @@ class ProductCreationCommand extends Command
             $this->storeProduct($data);
             $this->displayMessage("Product created", "green");
         } catch(Throwable $e) {
-
             $this->displayMessage("Failed to create Product!!!", "red");
             if ($e instanceof ValidationException) {
                 $this->displayErrors($e->errors());
-            } elseif ($e instanceof InvalidContentImage) {
+            } elseif ($e instanceof InvalidContentImageException) {
                 $this->displayMessage($e->getMessage(), "red");
             } else {
                 $this->displayMessage("server error", "red");
