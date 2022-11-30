@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\Services\GetDataServiceInterface;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Throwable;
 
 class CategoryController extends Controller
 {
@@ -21,11 +23,19 @@ class CategoryController extends Controller
     /**
      * get all categories
      *
-     * @return void
+     * @return array
      */
-    public function index()
+    public function index(): array
     {
-        $categories =  $this->getDataService->getCategories();
+        try {
+            $categories =  $this->getDataService->getCategories();
+        } catch(Throwable $e) {
+            throw new HttpResponseException(
+                response()->json([
+                    'messages' => array(["Server Error"])
+                ], 500)
+            );
+        }
         return $categories;
     }
 
@@ -34,11 +44,19 @@ class CategoryController extends Controller
      *
      * @param int $id
      *
-     * @return void
+     * @return array
      */
-    public function filter(int $id)
+    public function filter(int $id): array
     {
-        $products = $this->getDataService->getProductsByCategory($id);
+        try {
+            $products = $this->getDataService->getProductsByCategory($id);
+        } catch(Throwable $e) {
+            throw new HttpResponseException(
+                response()->json([
+                    'messages' => array(["Server Error"])
+                ], 500)
+            );
+        }
         return $products;
     }
 }

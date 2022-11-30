@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\Services\GetDataServiceInterface;
 use App\Interfaces\Services\ProductCreationServiceInterface;
-use App\Validators\ProductCreationValidator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
-use Illuminate\Support\ViewErrorBag;
+use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Validation\ValidationException;
-use PhpParser\ErrorHandler\Throwing;
 use Throwable;
 
 class ProductController extends Controller
@@ -38,11 +36,19 @@ class ProductController extends Controller
     /**
      * get all products
      *
-     * @return void
+     * @return array
      */
-    public function index()
+    public function index(): array
     {
-        $products = $this->getDataService->getProducts();
+        try {
+            $products = $this->getDataService->getProducts();
+        } catch(Throwable $e) {
+            throw new HttpResponseException(
+                response()->json([
+                    'messages' => array(["Server Error"])
+                ], 500)
+            );
+        }
         return $products;
     }
 
@@ -51,9 +57,9 @@ class ProductController extends Controller
      *
      * @param Illuminate\Http\Request $request
      *
-     * @return void
+     * @return Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): HttpResponse
     {
         $values = $request->all();
         try {
@@ -74,7 +80,7 @@ class ProductController extends Controller
                 );
             }
         }
-        return response($product, 201)
+        return response("product created", 201)
             ->header('Content-Type', 'application/json');
     }
 }
