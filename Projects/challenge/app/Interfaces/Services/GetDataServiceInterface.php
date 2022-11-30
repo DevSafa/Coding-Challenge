@@ -2,11 +2,9 @@
 
 namespace App\Interfaces\Services;
 
-use Illuminate\Database\Eloquent\Collection;
-
 interface GetDataServiceInterface
 {
-    public function getProducts(): Collection;
-    public function getCategories(): Collection;
-    public function getProductsByCategory(int $id): Collection;
+    public function getProducts(): array;
+    public function getCategories(): array;
+    public function getProductsByCategory(int $id): array;
 }

@@ -111,23 +111,19 @@ class ProductCreationService implements ProductCreationServiceInterface
     }
 
     /**
-     * @param array $categories
-     * @param int    $id
+     * @param int    $productId
+     * @param int    $categoryId
      *
      * @return array
      */
     protected function prepareDataForCategoryProductRepo(
-        array $categories,
-        int $id
+        int $productId,
+        int $categoryId
     ): array {
-        $data = array();
-
-        foreach ($categories as $category) {
-            array_push($data, [
-                "product_id" => $id,
-                "category_id"=>$category,
-            ]);
-        }
+        $data = array([
+            "product_id" => $productId,
+            "category_id" => $categoryId,
+        ]);
         return $data;
     }
 
@@ -179,19 +175,20 @@ class ProductCreationService implements ProductCreationServiceInterface
     /**
      * @param string $name
      *
+     * @param int $productId
+     *
      * @return void
      */
     protected function toCategoryProductRepository(
-        string $name
+        string $name,
+        int     $productId
     ): void {
         $parent = $this->categoryRepository->getCategoryByName($name);
-
-        $categoriesIds = $this->getCategoriesIds($parent);
-        // dd($parent);
         $data = $this->prepareDataForCategoryProductRepo(
-            $categoriesIds,
+            $productId,
             $parent['id']
         );
+        dd($data);
         $this->categoryProductRepository->store($data);
     }
 
@@ -203,7 +200,7 @@ class ProductCreationService implements ProductCreationServiceInterface
     public function storeProduct(array $values): Product
     {
         $product = $this->toProductRepository($values);
-        $this->toCategoryProductRepository($values['category']);
+        $this->toCategoryProductRepository($values['category'], $product['id']);
 
         $this->storeImage($values['image'], $product['image']);
 

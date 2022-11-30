@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Exceptions\InvalidContentImage;
 use App\Exceptions\InvalidContentImageException;
 use App\Interfaces\Services\ProductCreationServiceInterface;
 use Illuminate\Console\Command;

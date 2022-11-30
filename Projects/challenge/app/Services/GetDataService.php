@@ -5,7 +5,10 @@ namespace App\Services;
 use App\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Interfaces\Repositories\ProductRepositoryInterface;
 use App\Interfaces\Services\GetDataServiceInterface;
+use App\Models\Category;
+use App\Models\CategoryProduct;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as SupportCollection;
 
 class GetDataService implements GetDataServiceInterface
 {
@@ -18,7 +21,8 @@ class GetDataService implements GetDataServiceInterface
      * @var App\Interfaces\Repositories\ProductRepositoryInterface;
      */
     protected $productRepository = null;
-    
+
+    protected $categoryProduct = null;
     /**
      * Create a new GetDataService instance
      *
@@ -26,41 +30,95 @@ class GetDataService implements GetDataServiceInterface
     */
     public function __construct(
         CategoryRepositoryInterface $categoryRepository,
-        ProductRepositoryInterface $productRepository
+        ProductRepositoryInterface $productRepository,
+        CategoryRepositoryInterface $categoryProductRepository
     ) {
         $this->categoryRepository = $categoryRepository;
         $this->productRepository = $productRepository;
+        $this->categoryProductRepository = $categoryProductRepository;
     }
 
     /**
      * get all products using productRepository
      *
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return array
      */
-    public function getProducts(): Collection
+    public function getProducts(): array
     {
-        return $this->productRepository->all();
+        return $this->productRepository->all()->toArray();
     }
 
     /**
      * get all categories using categoryRepository
      *
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return array
      */
-    public function getCategories(): Collection
+    public function getCategories(): array
     {
-        return $this->categoryRepository->all();
+        return $this->categoryRepository->all()->toArray();
     }
 
     /**
-     * get all categories using categoryRepository
+     * get all sub categories of  a category
+     * store their product in a collection
      *
      * @param int $id
      *
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return array
      */
-    public function getProductsByCategory(int $id): Collection
+    public function getProductsByCategory(int $id): array
     {
-        return $this->categoryRepository->filter($id);
+        $category = $this->categoryRepository->getCategoryById($id);
+        $ids = $this->getIds($category);
+        $categories = $this->categoryRepository->getCategories($ids);
+
+        return $this->productsOfCategory($categories);
+    }
+
+    /**
+     * get products from a given collection of categories
+     *
+     * @return array
+     */
+    protected function productsOfCategory(Collection $categories): array
+    {
+        $products = collect();
+        foreach ($categories as $category) {
+            $categoryProducts = $category->products()->get();
+            $products = $products->merge($categoryProducts);
+        }
+        return $products->toArray();
+    }
+
+
+    /**
+     * get Ids of children recursively
+     *
+     * @param
+     */
+    protected function getIds(Category $category): array
+    {
+        $categoriesIds = $this->collectIds($category);
+        return $categoriesIds;
+    }
+
+    /**
+     * get children ids of a given category
+     *
+     * @param Category
+     *
+     * @return array
+     */
+    protected function collectIds(Category $topLevelCategory): array
+    {
+        $ids = collect();
+        $ids = $ids->merge($topLevelCategory['id']);
+        $children = $topLevelCategory['children'];
+        if ($children) {
+            foreach ($children as $category) {
+                $ids = $ids->merge($this->collectIds($category));
+            }
+        }
+        return ($ids->toArray());
     }
 }
