@@ -20,11 +20,6 @@ class Category extends Model
     use HasFactory;
 
     /**
-     * the relation to eager load on every query
-     */
-    protected $with = ['children'];
-
-    /**
      * The attributes that should be visible in arrays
      *
      * @var array

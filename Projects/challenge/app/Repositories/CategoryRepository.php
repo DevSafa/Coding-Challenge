@@ -15,7 +15,9 @@ class CategoryRepository implements CategoryRepositoryInterface
      */
     public function all(): Collection
     {
-        return Category::whereNull('parent_id')->get();
+        return Category::whereNull('parent_id')
+                ->with(['children'])
+                ->get();
     }
 
     /**
@@ -27,40 +29,20 @@ class CategoryRepository implements CategoryRepositoryInterface
      */
     public function filter(int $id): Collection
     {
-        return Category::find($id)->products()->get();
+        return Category::find($id)
+                    ->products()
+                    ->get();
     }
 
     /**
-     * get parent of a category
-     *
-     * @param int $id
-     *
-     * @return Illuminate\Database\Eloquent\Collection
-     */
-    public function getParent(int $id): Collection
-    {
-        return Category::find($id)->parent()->get();
-    }
-
-    /**
-     * get category with specific name
-     *
-     * @param string $name
-     *
+     * @param   string $name
+     * 
      * @return App\Models\Category
      */
-    public function getCategory(string $name): Category
+    public function getCategoryByName(string $name): Category
     {
-        return Category::firstWhere('name', $name);
-    }
-
-    /**
-     * get collection of ids
-     *
-     * @return Illuminate\Database\Eloquent\Collection
-     */
-    public function getCategoriesIds(): Collection
-    {
-        return Category::select('id')->get();
+        return  Category::Where('name', $name)
+                    ->with(['parent'])
+                    ->first();
     }
 }

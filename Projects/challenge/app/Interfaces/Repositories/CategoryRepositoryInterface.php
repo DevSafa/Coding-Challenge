@@ -9,6 +9,5 @@ interface CategoryRepositoryInterface
 {
     public function all(): Collection;
     public function filter(int $id): Collection;
-    public function getParent(int $id): Collection;
-    public function getCategory(string $name): Category;
+    public function getCategoryByName(string $name): Category;
 }
