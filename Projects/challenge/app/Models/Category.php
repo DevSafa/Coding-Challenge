@@ -20,6 +20,11 @@ class Category extends Model
     use HasFactory;
 
     /**
+     * @var array
+     */
+    protected $with = ['children'];
+
+    /**
      * The attributes that should be visible in arrays
      *
      * @var array
