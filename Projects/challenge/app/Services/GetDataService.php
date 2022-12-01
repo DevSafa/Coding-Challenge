@@ -2,13 +2,12 @@
 
 namespace App\Services;
 
+use App\Exceptions\InvalidParameterException;
 use App\Interfaces\Repositories\CategoryRepositoryInterface;
 use App\Interfaces\Repositories\ProductRepositoryInterface;
 use App\Interfaces\Services\GetDataServiceInterface;
 use App\Models\Category;
-use App\Models\CategoryProduct;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Collection as SupportCollection;
 
 class GetDataService implements GetDataServiceInterface
 {
@@ -69,6 +68,9 @@ class GetDataService implements GetDataServiceInterface
     public function getProductsByCategory(int $id): array
     {
         $category = $this->categoryRepository->getCategoryById($id);
+        if ($category === null) {
+            throw new InvalidParameterException("Invalid category Id");
+        }
         $ids = $this->getIds($category);
         $categories = $this->categoryRepository->getCategories($ids);
 

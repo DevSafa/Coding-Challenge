@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\InvalidParameterException;
 use App\Interfaces\Services\GetDataServiceInterface;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Throwable;
@@ -51,11 +52,19 @@ class CategoryController extends Controller
         try {
             $products = $this->getDataService->getProductsByCategory($id);
         } catch(Throwable $e) {
-            throw new HttpResponseException(
-                response()->json([
-                    'messages' => array(["Server Error"])
-                ], 500)
-            );
+            if ($e instanceof InvalidParameterException) {
+                throw new HttpResponseException(
+                    response()->json([
+                        'messages' => array([$e->getMessage()])
+                    ], 400)
+                );
+            } else {
+                throw new HttpResponseException(
+                    response()->json([
+                        'messages' => array(["Server Error"])
+                    ], 500)
+                );
+            }
         }
         return $products;
     }

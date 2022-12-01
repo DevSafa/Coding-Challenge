@@ -19,18 +19,17 @@ class CategoryRepository implements CategoryRepositoryInterface
                 ->get();
     }
 
-
     /**
      * @param  int $id
      *
-     * @return App\Models\Category
+     * @return App\Models\Category or null
      */
-    public function getCategoryById(int $id): Category
+    public function getCategoryById(int $id): ?Category
     {
-        return Category::find($id);
+        return Category::where('id', $id)->first();
     }
 
-       /**
+    /**
      * @param  string name
      *
      * @return App\Models\Category
@@ -39,6 +38,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     {
         return Category::where("name", $name)->first();
     }
+
     /**
      * get categories from  array of ids
      *
