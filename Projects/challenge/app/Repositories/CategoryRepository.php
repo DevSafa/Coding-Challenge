@@ -30,6 +30,15 @@ class CategoryRepository implements CategoryRepositoryInterface
         return Category::find($id);
     }
 
+       /**
+     * @param  int $id
+     *
+     * @return App\Models\Category
+     */
+    public function getCategoryByName(string $name)
+    {
+        return Category::where("name", $name)->first();
+    }
     /**
      * get categories from  array of ids
      *

@@ -80,7 +80,7 @@ class ProductController extends Controller
                 );
             }
         }
-        return response("product created", 201)
+        return response($product, 201)
             ->header('Content-Type', 'application/json');
     }
 }
