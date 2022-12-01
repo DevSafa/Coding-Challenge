@@ -68,16 +68,4 @@ docker-compose exec laravel-app php artisan product:create
     #password :  #DB_PASSWORD=safa
   127.0.0.1:8081
   
-  #endpoints
-    #show all categories
-    127.0.0.1:8000/categories
-  
-    #show all products
-    127.0.0.1:8000/products
-  
-    #show products of a specific category
-    127.0.0.1:8000/category/products/{id}
-    
-    #create a product 
-    127.0.0.1:8000/products
 ```
