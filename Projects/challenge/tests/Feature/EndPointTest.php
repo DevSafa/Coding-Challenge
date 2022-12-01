@@ -33,7 +33,6 @@ class EndPointTest extends TestCase
         parent::setUp();
         $this->seed(CategorySeeder::class);
         Storage::fake('/public/images');
-
     }
 
 
@@ -44,7 +43,6 @@ class EndPointTest extends TestCase
      */
     public function test_creation_product_response201(): void
     {
-
         $data = $this->getFakeData();
         $response = $this->sendPostRequest($data);
         $response->assertStatus(201);
@@ -57,7 +55,6 @@ class EndPointTest extends TestCase
      */
     protected function getFakeData(): array
     {
-
         $count = Category::count();
         $id = $this->faker->numberBetween(1, $count);
         $imageName = $this->faker->name .'.png';
@@ -73,28 +70,28 @@ class EndPointTest extends TestCase
     }
 
 
-    // /**
-    //  * test creation of a product successfully
-    //  *
-    //  * @return void
-    //  */
-    // public function test_creation_product_database_successfully(): void
-    // {
-    //     Storage::fake('/public/images');
+    /**
+     * test creation of a product successfully
+     *
+     * @return void
+     */
+    public function test_creation_product_database_successfully(): void
+    {
+        Storage::fake('/public/images');
 
-    //     $data = $this->getFakeData();
-    //     $response = $this->sendPostRequest($data);
+        $data = $this->getFakeData();
+        $response = $this->sendPostRequest($data);
 
-    //     $this->assertDatabaseHas(
-    //         'products',
-    //         [
-    //         'name'          => $data['name'],
-    //         'description'   => $data['description'],
-    //         'price'         => $data['price'],
-    //         'image'         => $response['image']
-    //         ]
-    //     );
-    // }
+        $this->assertDatabaseHas(
+            'products',
+            [
+            'name'          => $data['name'],
+            'description'   => $data['description'],
+            'price'         => $data['price'],
+            'image'         => $response['image']
+            ]
+        );
+    }
 
     /**
      * send a post request to my endpoint with some fake data
@@ -119,54 +116,54 @@ class EndPointTest extends TestCase
         return $response;
     }
 
-    // /*
-    //  * test validation of data failed.
-    //  *
-    //  * @return void
-    //  */
-    // public function test_validation_failed_existence_product_database(): void
-    // {
-    //     Storage::fake('/public/images');
+    /*
+     * test validation of data failed.
+     *
+     * @return void
+     */
+    public function test_validation_failed_existence_product_database(): void
+    {
+        Storage::fake('/public/images');
 
-    //     $data = $this->getFakeData();
-    //     $product = Product::factory()->create();
-    //     $data['name'] = $product->name;
-    //     $this->sendPostRequest($data);
+        $data = $this->getFakeData();
+        $product = Product::factory()->create();
+        $data['name'] = $product->name;
+        $this->sendPostRequest($data);
 
-    //     $this->assertDatabaseMissing(
-    //         'products',
-    //         [
-    //         'name'          => $data['name'],
-    //         'description'   => $data['description'],
-    //         'price'         => $data['price'],
-    //         ]
-    //     );
-    // }
+        $this->assertDatabaseMissing(
+            'products',
+            [
+            'name'          => $data['name'],
+            'description'   => $data['description'],
+            'price'         => $data['price'],
+            ]
+        );
+    }
 
-    // /**
-    //  * @return void
-    //  */
-    // public function test_failed_creation_product_response400(): void
-    // {
-    //     Storage::fake('/public/images');
+    /**
+     * @return void
+     */
+    public function test_failed_creation_product_response400(): void
+    {
+        Storage::fake('/public/images');
 
-    //     $data = $this->getFakeData();
-    //     $data['category'] = $this->faker->name;
-    //     $response = $this->sendPostRequest($data);
-    //     $response->assertStatus(400);
-    // }
+        $data = $this->getFakeData();
+        $data['category'] = $this->faker->name;
+        $response = $this->sendPostRequest($data);
+        $response->assertStatus(400);
+    }
 
-    // /**
-    //  * test successful upload of an image
-    //  *
-    //  * @return void
-    //  */
-    // public function test_successful_upload_image(): void
-    // {
-    //     Storage::fake('/public/images');
+    /**
+     * test successful upload of an image
+     *
+     * @return void
+     */
+    public function test_successful_upload_image(): void
+    {
+        Storage::fake('/public/images');
 
-    //     $data = $this->getFakeData();
-    //     $response = $this->sendPostRequest($data);
-    //     Storage::assertExists('/public/images/'.$response['image']);
-    // }
+        $data = $this->getFakeData();
+        $response = $this->sendPostRequest($data);
+        Storage::assertExists('/public/images/'.$response['image']);
+    }
 }
