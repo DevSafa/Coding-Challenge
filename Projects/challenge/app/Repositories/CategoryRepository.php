@@ -31,11 +31,11 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
        /**
-     * @param  int $id
+     * @param  string name
      *
      * @return App\Models\Category
      */
-    public function getCategoryByName(string $name)
+    public function getCategoryByName(string $name): Category
     {
         return Category::where("name", $name)->first();
     }

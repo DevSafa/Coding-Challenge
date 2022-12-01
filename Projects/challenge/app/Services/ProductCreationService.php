@@ -120,10 +120,15 @@ class ProductCreationService implements ProductCreationServiceInterface
         int $productId,
         int $categoryId
     ): array {
+        $data = collect();
+
         $data = array([
-            "product_id" => $productId,
-            "category_id" => $categoryId,
-        ]);
+            'product_id' => $productId,
+            'category_id' => $categoryId
+        ]
+        );
+
+
         return $data;
     }
 
@@ -167,7 +172,6 @@ class ProductCreationService implements ProductCreationServiceInterface
     protected function toProductRepository(array $values): Product
     {
         $data = $this->prepareDataForProductRepo($values);
-
         $product = $this->productRepository->store($data);
         return $product;
     }
@@ -188,7 +192,6 @@ class ProductCreationService implements ProductCreationServiceInterface
             $productId,
             $parent['id']
         );
-        dd($data);
         $this->categoryProductRepository->store($data);
     }
 
@@ -200,6 +203,7 @@ class ProductCreationService implements ProductCreationServiceInterface
     public function storeProduct(array $values): Product
     {
         $product = $this->toProductRepository($values);
+
         $this->toCategoryProductRepository($values['category'], $product['id']);
 
         $this->storeImage($values['image'], $product['image']);

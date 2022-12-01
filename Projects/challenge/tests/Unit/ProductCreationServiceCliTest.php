@@ -15,6 +15,7 @@ use Illuminate\Http\File;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Testing\File as TestingFile;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Validation\ValidationException;
 
 class ProductCreationServiceCliTest extends TestCase
 {
@@ -97,7 +98,7 @@ class ProductCreationServiceCliTest extends TestCase
     }
 
     /**
-     * retrun void
+     * @return void
      */
     public function test_get_Invalid_image_from_url(): void
     {
@@ -107,7 +108,7 @@ class ProductCreationServiceCliTest extends TestCase
     }
 
     /**
-     * return void
+     * @return void
      */
     public function test_get_valid_image_from_url(): void
     {
@@ -116,7 +117,7 @@ class ProductCreationServiceCliTest extends TestCase
     }
 
     /**
-     * return void
+     * @return void
      */
     public function test_get_file_upload_format(): void
     {
@@ -129,7 +130,7 @@ class ProductCreationServiceCliTest extends TestCase
     }
 
     /**
-     * return void
+     * @return void
      */
     public function test_valid_data(): void
     {
@@ -137,6 +138,20 @@ class ProductCreationServiceCliTest extends TestCase
 
         $return = $this->productCreationService->validateData($values, false);
         $this->assertTrue($return);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_Invalid_data(): void
+    {
+        $values = $this->getInValidData();
+        $this->expectException(ValidationException::class);
+
+        $return = $this->productCreationService->validateData(
+            $values,
+            false
+        );
     }
 
     /**
@@ -153,6 +168,21 @@ class ProductCreationServiceCliTest extends TestCase
             "description"   => $this->faker->paragraph,
             "price"         => $this->faker->randomFloat(2, 10, 200),
             "category"      => $category['name']
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getInvalidData(): array
+    {
+        return
+        [
+            "image"         => "Invalid IMage",
+            "name"          => $this->faker->name,
+            "description"   => $this->faker->paragraph,
+            "price"         => $this->faker->randomFloat(2, 10, 200),
+            "category"      => "Invalid Catgeory"
         ];
     }
 }
