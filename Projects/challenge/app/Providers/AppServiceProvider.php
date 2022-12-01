@@ -13,7 +13,6 @@ use App\Repositories\ProductRepository;
 use App\Services\GetDataService;
 use App\Services\ProductCreationService;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Config;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -53,18 +52,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // $categoryRepository = new CategoryRepository();
-        // $categories = $categoryRepository->getCategoriesIds();
-
-        // $categories = $categories->toArray();
-
-        // $tmp = array();
-
-        // foreach ($categories as $country)
-        // {
-        //     $tmp[] = $country['id'];
-        // }
-
-        // Config::set('categories', $tmp);
     }
 }
